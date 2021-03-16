@@ -21,7 +21,7 @@ library(data.table)
 dl <- tempfile()
 download.file("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", dl)
 
-mushroom <- fread(text = readLines(dl), header = FALSE, stringsAsFactors = TRUE,
+mushroom <- fread(text = readLines(dl), header = FALSE, 
                  col.names = c(
                    "class","cap-shape",
                    "cap-surface","cap-color",
@@ -32,12 +32,14 @@ mushroom <- fread(text = readLines(dl), header = FALSE, stringsAsFactors = TRUE,
                    "stalk-color-below-ring","veil-type","veil-color",
                    "ring-number","ring-type","spore-print-color",
                    "population","habitat"))
+#stringsAsFactors = TRUE,
 
 mushroom <- as.data.frame(mushroom)
 rm(dl)
 
 class(mushroom)
 summary(mushroom)
+distinct(mushroom$`spore-print-color`)
 
 set.seed(12345, sample.kind="Rounding")
 test_index <- createDataPartition(y = mushroom$class, times = 1,

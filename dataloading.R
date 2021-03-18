@@ -46,3 +46,4 @@ test_set <- mushroom[test_index,]
 train_set <- mushroom[-test_index,]
 
 rm(test_index)
+

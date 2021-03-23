@@ -82,6 +82,9 @@ result_accuracy <- sapply(colindex, function(x){
 
 result_accuracy
 
+fitglm <- train(class ~ ., method = "glm", data = train_set)
+
+fitglm["finalModel"]
 
 fitglm <- train(class ~ ., method = "glm", data = train_set)
 

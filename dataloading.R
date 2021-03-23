@@ -83,6 +83,14 @@ result_accuracy <- sapply(colindex, function(x){
 result_accuracy
 
 
+fitglm <- train(class ~ ., method = "glm", data = train_set)
+
+y_hat <- predict(fitglm, test_set)
+
+mean(y_hat == test_set$class)
+
+fitglm
+
 ##### Question 6.1 for reference
 
 library(tidyverse)

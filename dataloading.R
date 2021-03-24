@@ -86,6 +86,11 @@ fitglm <- train(class ~ ., method = "glm", data = train_set)
 
 fitglm["finalModel"]
 
+length(fitglm$coefficient)
+
+length(fitglm$coefficients)
+fitglm$rank
+
 ##### Question 6.1 for reference
 
 library(tidyverse)

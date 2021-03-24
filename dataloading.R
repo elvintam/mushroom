@@ -86,14 +86,6 @@ fitglm <- train(class ~ ., method = "glm", data = train_set)
 
 fitglm["finalModel"]
 
-<<<<<<< HEAD
-length(fitglm$coefficient)
-
-length(fitglm$coefficients)
-fitglm$rank
-=======
-fitglm <- train(class ~ ., method = "glm", data = train_set)
-
 y_hat <- predict(fitglm, test_set)
 
 mean(y_hat == test_set$class)
@@ -130,8 +122,6 @@ corrplot(M, method="color", col=col(200),
          diag=FALSE )
 
 help("corrplot")
-
->>>>>>> a5fb0d41e6994148de6f0f0b5d12fc820d5bd6d5
 
 ##### Question 6.1 for reference
 

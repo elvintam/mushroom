@@ -8,6 +8,7 @@ library(data.table)
 # https://www.kaggle.com/sanchitakarmakar/mushroom-classification-99-75-ac-rf-pca
 # https://www.kaggle.com/andreshg/mushroom-s-h2o-automl-and-clasic-models-auc-1-0
 # https://www.kaggle.com/tosinabase/mushroom-classification-tree-methods-comparison
+# https://towardsdatascience.com/how-to-create-a-correlation-matrix-with-too-many-variables-309cc0c0a57
 #####
 
 ##########################################################

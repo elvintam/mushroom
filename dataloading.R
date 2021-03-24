@@ -86,10 +86,52 @@ fitglm <- train(class ~ ., method = "glm", data = train_set)
 
 fitglm["finalModel"]
 
+<<<<<<< HEAD
 length(fitglm$coefficient)
 
 length(fitglm$coefficients)
 fitglm$rank
+=======
+fitglm <- train(class ~ ., method = "glm", data = train_set)
+
+y_hat <- predict(fitglm, test_set)
+
+mean(y_hat == test_set$class)
+
+fitglm
+
+library(corrplot)
+library(Hmisc)
+
+
+train_set_cor <- cor(train_set)
+
+corrplot(train_set)
+
+head(mtcars)
+M <- cor(mtcars)
+head(round(M, 2))
+
+M <- cor(as.matrix(train_set))
+
+
+help(cor)
+
+col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
+corrplot(M, method="color", col=col(200),  
+         type="upper", order="hclust", 
+         addCoef.col = "black", 
+         # Add coefficient of correlation
+         tl.col="black", tl.srt=45, 
+         #Text label color and rotation
+         # Combine with significance
+         sig.level = 0.01, insig = "blank", 
+         # hide correlation coefficient on the principal diagonal
+         diag=FALSE )
+
+help("corrplot")
+
+>>>>>>> a5fb0d41e6994148de6f0f0b5d12fc820d5bd6d5
 
 ##### Question 6.1 for reference
 

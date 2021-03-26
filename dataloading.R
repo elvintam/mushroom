@@ -54,12 +54,11 @@ models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn", "gamLoess", "multin
 
 models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn")
 
+models <- "glm"
 
-#models <- "glm"
+train_set <- train_set %>% select(-veil_type, -stalk_root, -stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
 
-train_set <- train_set %>% select(-veil_type)
-
-test_set <- test_set %>% select(-veil_type)
+test_set <- test_set %>% select(-veil_type, -stalk_root, -stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
 
 str(train_set)
 
@@ -80,8 +79,9 @@ result_accuracy <- sapply(colindex, function(x){
   confusionMatrix(as.factor(result[,x]), test_set$class)$overall["Accuracy"]  
 })
 
-
 result_accuracy
+
+str(test_set)
 
 fitglm <- train(class ~ ., method = "glm", data = train_set)
 
@@ -91,7 +91,13 @@ y_hat <- predict(fitglm, test_set)
 
 mean(y_hat == test_set$class)
 
-fitglm
+fitglm$coef
+
+summary(fitglm)
+
+
+test_set %>% filter(stalk_color_above_ring == "c") %>% nrow()
+
 
 library(corrplot)
 library(Hmisc)

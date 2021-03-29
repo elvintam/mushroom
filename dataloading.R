@@ -54,6 +54,11 @@ models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn", "gamLoess", "multin
 
 models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn")
 
+#mehtods glm, naive bayes -> qda (one specific of naive bayes) -> lda (simplification of qda)
+
+#predict(train_qda, test_set, type = "prob") %>% head()
+#predict(train_qda, test_set) %>% head()
+
 models <- "glm"
 
 train_set <- train_set %>% select(-veil_type, -stalk_root, -stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)

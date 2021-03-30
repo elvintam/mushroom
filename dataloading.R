@@ -59,6 +59,13 @@ models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn")
 #predict(train_qda, test_set, type = "prob") %>% head()
 #predict(train_qda, test_set) %>% head()
 
+# rpart to create regression tree, can show descision flow chart
+# train_rpart <- train(margin ~ ., method = "rpart", tuneGrid = data.frame(cp = seq(0, 0.05, len = 25)), data = polls_2008)
+# can tune CP here
+# Classification trees, or decision trees, are used in prediction problems where the outcome is categorical. 
+# Decision trees form predictions by calculating which class is the most common among the training set observations 
+# within the partition, rather than taking the average in each partition.
+# Then can introduce random forest
 models <- "glm"
 
 train_set <- train_set %>% select(-veil_type)

@@ -61,6 +61,11 @@ models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn")
 
 models <- "glm"
 
+train_set <- train_set %>% select(-veil_type)
+
+test_set <- test_set %>% select(-veil_type)
+
+
 train_set <- train_set %>% select(-veil_type, -stalk_root, -stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
 
 test_set <- test_set %>% select(-veil_type, -stalk_root, -stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
@@ -98,7 +103,11 @@ mean(y_hat == test_set$class)
 
 fitglm$coef
 
-summary(fitglm)
+s <- summary(fitglm)
+
+s$aliased[which(s$aliased == TRUE)]
+
+s$cov.unscaled[which(s$cov.unscaled > 0.9)]
 
 
 test_set %>% filter(stalk_color_above_ring == "c") %>% nrow()

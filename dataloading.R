@@ -66,6 +66,51 @@ models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn")
 # Decision trees form predictions by calculating which class is the most common among the training set observations 
 # within the partition, rather than taking the average in each partition.
 # Then can introduce random forest
+
+# Random Forest
+# fit <- train(y ~ ., method = "rRborist", tuneGrid = data.frame, data = )
+# use mtry to select the features used in prediction by random
+# use variable importance to see which variable is important
+
+# carat package reference
+# http://topepo.github.io/caret/available-models.html
+# http://topepo.github.io/caret/train-models-by-tag.html
+
+# y_hat_glm <- predict(train_glm, mnist_27$test, type = "raw")
+# y_hat_knn <- predict(train_knn, mnist_27$test, type = "raw")
+# ggplot(train_knn_cv, highlight = TRUE)
+# train can do the parameter maximization
+# ggplot(train_knn, highlight = TRUE)
+# train_knn$bestTune
+# train_knn$finalModel
+# can use change control
+#control <- trainControl(method = "cv", number = 10, p = .9)
+#train_knn_cv <- train(y ~ ., method = "knn", 
+#                      data = mnist_27$train,
+#                      tuneGrid = data.frame(k = seq(9, 71, 2)),
+#ggplot(train_knn_cv, highlight = TRUE)
+
+# train_knn$results %>% 
+#   ggplot(aes(x = k, y = Accuracy)) +
+#   geom_line() +
+#   geom_point() +
+#   geom_errorbar(aes(x = k, 
+#                     ymin = Accuracy - AccuracySD,
+#                     ymax = Accuracy + AccuracySD))                      trControl = control)
+
+# knn then can use gamLoess
+
+# pre-processing to transform predictr and remove predictor not useful
+# are highly correlated with others, have very few non-unique values, or have close to zero variation
+
+# caret package : nzv <- nearZeroVar(x)
+
+# caret need to have column name
+
+# variable importance importance()
+
+# ensemble different model to one
+
 models <- "glm"
 
 train_set <- train_set %>% select(-veil_type)

@@ -6,16 +6,19 @@ library(caret)
 summary(train_set)
 str(train_set)
 
+
+### glm
+
 train_set <- train_set %>% select(-veil_type, -stalk_root)
 test_set <- test_set %>% select(-veil_type, -stalk_root)
 
-fitglm <- train(class ~ ., method = "glm", data = train_set)
+fit_glm <- train(class ~ ., method = "glm", data = train_set)
 
-fitglm["finalModel"]
+fit_glm["finalModel"]
 
 warnings()
 
-s <- summary(fitglm)
+s <- summary(fit_glm)
 
 s$aliased[which(s$aliased == TRUE)]
 
@@ -34,20 +37,64 @@ train_set %>% filter(spore_print_color == "h") %>% nrow()
 train_set <- train_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
 test_set <- test_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
 
-fitglm <- train(class ~ ., method = "glm", data = train_set)# maxit = 200)
-fitglm["finalModel"]
+fit_glm <- train(class ~ ., method = "glm", data = train_set)# maxit = 200)
+fit_glm["finalModel"]
 
 warnings()
 
-s <- summary(fitglm)
+s <- summary(fit_glm)
 
 s$aliased[which(s$aliased == TRUE)]
 
 
-y_hat <- predict(fitglm, test_set)
+y_hat_glm <- predict(fit_glm, test_set)
 
-result <- mean(y_hat == test_set$class)
+result <- mean(y_hat_glm == test_set$class)
 
-fitglm$coef
+result
 
-help("train")
+s <- confusionMatrix(y_hat_glm, test_set$class)
+
+s
+
+model_results <- tibble(Method = "glm",
+                        Accuracy = s$overall["Accuracy"],
+                        Kappa = s$overall["Kappa"],
+                        Sensitivity = s$byClass["Sensitivity"],
+                        Specificity = s$byClass["Specificity"])
+
+model_results %>% knitr::kable()
+                            
+
+#### Classification Model, rpart
+
+
+### data recovery
+set.seed(12345, sample.kind="Rounding")
+test_index <- createDataPartition(y = mushroom$class, times = 1,
+                                  p = 0.2, list = FALSE)
+test_set <- mushroom[test_index,]
+train_set <- mushroom[-test_index,]
+
+rm(test_index)
+### data recovery
+
+
+train_set <- train_set %>% select(-veil_type, -stalk_root)
+test_set <- test_set %>% select(-veil_type, -stalk_root)
+
+fit_nb<- train(class ~ ., method = "naive_bayes", data = train_set)
+fit_nb["finalModel"]
+
+summary(fit_nb)
+
+y_hat_nb <- predict(fit_nb, test_set)
+
+result <- mean(y_hat_nb == test_set$class)
+
+result
+
+confusionMatrix(y_hat_nb, test_set$class)
+
+confusionMatrix(y_hat_nb, test_set$class)$overall["Accuracy"]
+

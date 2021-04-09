@@ -37,9 +37,7 @@ train_set <- mushroom[-test_index,]
 
 rm(test_index)
 
-summary(train_set$class)
 
-str(train_set)
 
 models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn", "gamLoess", "multinom", "qda", "rf", "adaboost")
 

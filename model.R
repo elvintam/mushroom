@@ -94,7 +94,52 @@ result <- mean(y_hat_nb == test_set$class)
 
 result
 
-confusionMatrix(y_hat_nb, test_set$class)
+s <- confusionMatrix(y_hat_nb, test_set$class)
 
-confusionMatrix(y_hat_nb, test_set$class)$overall["Accuracy"]
+model_results <- rbind(model_results,
+                       tibble(Method = "navie bayes",
+                        Accuracy = s$overall["Accuracy"],
+                        Kappa = s$overall["Kappa"],
+                        Sensitivity = s$byClass["Sensitivity"],
+                        Specificity = s$byClass["Specificity"]))
 
+model_results %>% knitr::kable()
+
+
+### svmLinear
+
+### data recovery
+set.seed(12345, sample.kind="Rounding")
+test_index <- createDataPartition(y = mushroom$class, times = 1,
+                                  p = 0.2, list = FALSE)
+test_set <- mushroom[test_index,]
+train_set <- mushroom[-test_index,]
+
+rm(test_index)
+### data recovery
+
+
+train_set <- train_set %>% select(-veil_type, -stalk_root)
+test_set <- test_set %>% select(-veil_type, -stalk_root)
+
+fit_svmLinear<- train(class ~ ., method = "svmLinear", data = train_set)
+fit_svmLinear["finalModel"]
+
+summary(fit_svmLinear)
+
+y_hat_svmLinear <- predict(fit_svmLinear, test_set)
+
+result <- mean(y_hat_svmLinear == test_set$class)
+
+result
+
+s <- confusionMatrix(y_hat_svmLinear, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "svmLinear",
+                              Accuracy = s$overall["Accuracy"],
+                              Kappa = s$overall["Kappa"],
+                              Sensitivity = s$byClass["Sensitivity"],
+                              Specificity = s$byClass["Specificity"]))
+
+model_results %>% knitr::kable()

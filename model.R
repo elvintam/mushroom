@@ -81,7 +81,7 @@ model_results %>% knitr::kable()
 
 datarecovery()
 
-fit_lda<- train(class ~ ., method = "lda", data = train_set)
+fit_lda <- train(class ~ ., method = "lda", data = train_set)
 
 s <- summary(fit_lda)
 
@@ -108,7 +108,7 @@ model_results %>% knitr::kable()
 
 datarecovery()
 
-fit_nb<- train(class ~ ., method = "naive_bayes", data = train_set)
+fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)
 
 s <- summary(fit_nb)
 
@@ -133,7 +133,7 @@ model_results %>% knitr::kable()
 
 datarecovery()
 
-fit_svmLinear<- train(class ~ ., method = "svmLinear", data = train_set)
+fit_svmLinear <- train(class ~ ., method = "svmLinear", data = train_set)
 fit_svmLinear["finalModel"]
 
 s <- summary(fit_svmLinear)
@@ -154,4 +154,150 @@ model_results <- rbind(model_results,
 model_results %>% knitr::kable()
 
 
-#### Classification Model, rpart
+###########
+#### Classification Model
+###########
+
+datarecovery()
+
+fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
+fit_rpart["finalModel"]
+
+s <- summary(fit_rpart)
+
+y_hat_rpart <- predict(fit_rpart, test_set)
+
+cm <- confusionMatrix(y_hat_rpart, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "rpart",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+
+
+###########
+#### knn
+###########
+
+datarecovery()
+
+fit_knn <- train(class ~ ., method = "knn", data = train_set)
+fit_knn["finalModel"]
+
+s <- summary(fit_knn)
+
+y_hat_knn <- predict(fit_knn, test_set)
+
+cm <- confusionMatrix(y_hat_knn, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "knn",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+
+
+###########
+#### gamLoess
+###########
+
+datarecovery()
+
+fit_gamLoess <- train(class ~ ., method = "gamLoess", data = train_set)
+fit_gamLoess["finalModel"]
+
+s <- summary(fit_gamLoess)
+
+y_hat_gamLoess <- predict(fit_gamLoess, test_set)
+
+cm <- confusionMatrix(y_hat_gamLoess, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "gamLoess",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+
+
+###########
+#### multinom
+###########
+
+datarecovery()
+
+fit_multinom <- train(class ~ ., method = "multinom", data = train_set)
+fit_multinom["finalModel"]
+
+s <- summary(fit_multinom)
+
+y_hat_multinom <- predict(fit_multinom, test_set)
+
+cm <- confusionMatrix(y_hat_multinom, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "multinom",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+
+
+###########
+#### rf
+###########
+
+datarecovery()
+
+fit_rf <- train(class ~ ., method = "rf", data = train_set)
+fit_rf["finalModel"]
+
+s <- summary(fit_rf)
+
+y_hat_rf <- predict(fit_rf, test_set)
+
+cm <- confusionMatrix(y_hat_rf, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "rf",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+
+###########
+#### adaboost
+###########
+
+datarecovery()
+
+fit_adaboost <- train(class ~ ., method = "adaboost", data = train_set)
+fit_adaboost["finalModel"]
+
+s <- summary(fit_adaboost)
+
+y_hat_adaboost <- predict(fit_adaboost, test_set)
+
+cm <- confusionMatrix(y_hat_adaboost, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "adaboost",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()

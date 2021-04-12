@@ -41,40 +41,6 @@ rm(test_index)
 
 models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn", "gamLoess", "multinom", "qda", "rf", "adaboost")
 
-models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn")
-
-models <- "glm"
-
-train_set <- train_set %>% select(-veil_type)
-
-test_set <- test_set %>% select(-veil_type)
-
-
-train_set <- train_set %>% select(-veil_type, -stalk_root, -stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
-
-test_set <- test_set %>% select(-veil_type, -stalk_root, -stalk_color_above_ring, -stalk_color_below_ring, -veil_color, -ring_number, -ring_type, -spore_print_color, -habitat)
-
-str(train_set)
-
-fits <- lapply(models, function(model){
-  print(model)
-  train(class ~ ., method = model, data = train_set)
-})
-
-names(fits) <- models
-
-result <- sapply(fits, function(model){
-  y_hat <- predict(model, test_set)
-})
-
-colindex <- seq(1, 5, 1)
-
-result_accuracy <- sapply(colindex, function(x){
-  confusionMatrix(as.factor(result[,x]), test_set$class)$overall["Accuracy"]  
-})
-
-result_accuracy
-
 
 ##### Question 6.1 for reference
 

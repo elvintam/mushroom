@@ -1,7 +1,7 @@
 library(tidyverse)
 library(caret)
 
-
+####need to add pca ####
 
 summary(train_set)
 str(train_set)

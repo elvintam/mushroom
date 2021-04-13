@@ -38,10 +38,6 @@ train_set <- mushroom[-test_index,]
 rm(test_index)
 
 
-
-models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn", "gamLoess", "multinom", "qda", "rf", "adaboost")
-
-
 ##### Question 6.1 for reference
 
 library(tidyverse)

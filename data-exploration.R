@@ -17,16 +17,10 @@ train_set <- mushroom[-test_index,]
 rm(test_index)
 
 
-cor(as.integer(mushroom[]))
+mushroom %>% ggplot(aes(class)) + geom_bar(aes(fill = class), stat = "count") +
+             stat_count(geom = "text", colour = "white", size = 4,
+                        aes(label = ..count..), position= position_stack(vjust=0.5))
 
-class(mushroom)
-
-
-transform()
-
-t <- transform(mushroom, class=as.numeric(as.character(mushroom)))
-
-t
 
 featurePlot(x = train_set[, 1:23],
             y = train_set$class,

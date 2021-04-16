@@ -18,17 +18,27 @@ rm(test_index)
 
 
 mushroom %>% ggplot(aes(class)) + geom_bar(aes(fill = class), stat = "count") +
-             stat_count(geom = "text", colour = "white", size = 4,
+             stat_count(geom = "text", colour = "black", size = 4,
                         aes(label = ..count..), position= position_stack(vjust=0.5))
 
+mushroom %>% ggplot(aes(cap_shape)) + geom_bar(aes(fill = cap_shape), stat = "count") +
+  stat_count(geom = "text", colour = "black", size = 4,
+             aes(label = ..count..), position= position_stack(vjust=0.5))
 
-featurePlot(x = train_set[, 1:23],
-            y = train_set$class,
-            plot = "box",
-            #strip=strip.custom(par.strip.text=list(cex=.7)),
-            scales = list(x = list(relation="free"), 
-                          y = list(relation="free")))
+sapply(mushroom, function(df, response_variable, indep_variable){
 
-help("featurePlot")
-
+  response_variable <- enquo(response_variable)
+  indep_variable <- enquo(indep_variable)
+  
+  resp_plot <- 
+    df %>%
+    ggplot(aes()) +
+    geom_bar(aes(fill = ), stat = "count") +
+    stat_count(geom = "text", colour = "black", 
+               size = 4, aes(label = ..count..), 
+               position= position_stack(vjust=0.5))
+  
+  return(resp_plot)
+    
+})
 

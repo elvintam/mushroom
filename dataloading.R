@@ -1,6 +1,7 @@
 library(tidyverse)
 library(caret)
 library(data.table)
+library(DataExplorer)
 
 ##########################################################
 # Download Data set, create train set & test test
@@ -28,6 +29,34 @@ mushroom <- fread(text = readLines(dl), header = FALSE, stringsAsFactors = TRUE,
 
 mushroom <- as.data.frame(mushroom)
 rm(dl)
+
+### check if is null
+
+is.null(mushroom)
+str(mushroom)
+summary(mushroom)
+
+mushroom <- mushroom %>% select(-veil_type, -stalk_root)
+
+sapply(mushroom, function(x) {length(unique(x))} )
+
+introduce(mushroom)
+
+plot_intro(mushroom)
+
+plot_missing(mushroom)
+
+plot_bar(mushroom)
+
+plot_bar(mushroom, by = "class")
+
+plot_correlation(mushroom, maxcat = 5L)
+
+plot_prcomp(mushroom, maxcat = 5L)
+
+create_report(mushroom)
+
+help("plot_correlation")
 
 set.seed(12345, sample.kind="Rounding")
 test_index <- createDataPartition(y = mushroom$class, times = 1,

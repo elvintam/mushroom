@@ -1,21 +1,6 @@
 library(tidyverse)
 library(caret)
 
-summary(mushroom) 
-str(mushroom) 
-
-sapply(mushroom, function(x) {length(unique(x))} )
-
-mushroom <- mushroom %>% select(-veil_type, -stalk_root)
-
-set.seed(12345, sample.kind="Rounding")
-test_index <- createDataPartition(y = mushroom$class, times = 1,
-                                  p = 0.2, list = FALSE)
-test_set <- mushroom[test_index,]
-train_set <- mushroom[-test_index,]
-
-rm(test_index)
-
 
 mushroom %>% ggplot(aes(class)) + geom_bar(aes(fill = class), stat = "count") +
              stat_count(geom = "text", colour = "black", size = 4,

@@ -14,9 +14,6 @@ datarecovery <- function(){
   test_set <- mushroom[test_index,]
   train_set <- mushroom[-test_index,]
   
-  train_set <- train_set %>% select(-veil_type, -stalk_root)
-  test_set <- test_set %>% select(-veil_type, -stalk_root)
-  
   rm(test_index)
 }
 

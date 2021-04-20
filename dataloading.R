@@ -1,3 +1,8 @@
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(caret)) install.packages("caret", repos = "http://cran.us.r-project.org")
+if(!require(data.table)) install.packages("data.table", repos = "http://cran.us.r-project.org")
+if(!require(DataExplorer)) install.packages("DataExplorer", repos = "http://cran.us.r-project.org")
+
 library(tidyverse)
 library(caret)
 library(data.table)
@@ -36,15 +41,15 @@ is.null(mushroom)
 str(mushroom)
 summary(mushroom)
 
-mushroom <- mushroom %>% select(-veil_type, -stalk_root)
-
-sapply(mushroom, function(x) {length(unique(x))} )
-
-introduce(mushroom)
-
 plot_intro(mushroom)
 
 plot_missing(mushroom)
+
+plot_str(mushroom)
+
+plot_bar(mushroom, nrow = 2L, ncol = 4L)
+
+mushroom <- mushroom %>% select(-veil_type, -stalk_root)
 
 plot_bar(mushroom)
 
@@ -52,11 +57,14 @@ plot_bar(mushroom, by = "class")
 
 plot_correlation(mushroom, maxcat = 5L)
 
-plot_prcomp(mushroom, maxcat = 5L)
+plot_prcomp(mushroom)
 
-create_report(mushroom)
+# $page_0 to control page
 
-help("plot_correlation")
+#create_report(mushroom)
+
+mushroom <- mushroom %>% select(-veil_type, -stalk_root)
+
 
 set.seed(12345, sample.kind="Rounding")
 test_index <- createDataPartition(y = mushroom$class, times = 1,

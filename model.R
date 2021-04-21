@@ -298,3 +298,14 @@ model_results <- rbind(model_results,
                               Specificity = cm$byClass["Specificity"]))
 
 model_results %>% knitr::kable()
+
+
+###########
+#### ensemble
+###########
+
+y_hat_results <- cbind(y_hat_glm, y_hat_lda, y_hat_nb, y_hat_svmLinear, y_hat_rpart,
+                       y_hat_knn, y_hat_gamLoess, y_hat_multinom, y_hat_rf, y_hat_adaboost)
+
+
+y_hat_results

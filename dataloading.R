@@ -61,7 +61,8 @@ plot_prcomp(mushroom)
 
 # $page_0 to control page
 
-#create_report(mushroom)
+#
+create_report(mushroom)
 
 mushroom <- mushroom %>% select(-veil_type, -stalk_root)
 

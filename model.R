@@ -308,4 +308,15 @@ y_hat_results <- cbind(y_hat_glm, y_hat_lda, y_hat_nb, y_hat_svmLinear, y_hat_rp
                        y_hat_knn, y_hat_gamLoess, y_hat_multinom, y_hat_rf, y_hat_adaboost)
 
 
-y_hat_results
+y_hat_ensemble <- ifelse(rowMeans(y_hat_results == "e") >0.5, "e", "p")
+
+cm <- confusionMatrix(y_hat_ensemble, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "ensemble",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()

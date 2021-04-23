@@ -13,11 +13,15 @@ library(DataExplorer)
 ##########################################################
 
 # UCI Machine Learning Repository Mushroom dataset:
-# https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data
 
-
-dl <- tempfile()
-download.file("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", dl)
+ifelse(file.exists(".\\data\\agaricus-lepiota.data"),
+  { 
+    dl <- ".\\data\\agaricus-lepiota.data"
+  },
+  {
+    dl <- tempfile()
+    download.file("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", dl)
+  })
 
 mushroom <- fread(text = readLines(dl), header = FALSE, stringsAsFactors = TRUE,
                  col.names = c(

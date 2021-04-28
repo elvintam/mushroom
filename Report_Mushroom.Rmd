@@ -19,17 +19,29 @@ library(knitr)
 
 ```
 
-## R Markdown
-
 ```{r mushroompic, echo = FALSE}
 # All defaults
 include_graphics("mushroom.jpg")
 ```
 CREDIT: GETTY IMAGES
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# Introduction
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+In this report, our goal is to predict the edibility (class: edible / poisonous) of mushroom basing on attribution information. Data set includes descriptions of hypothetical samples corresponding to 23 species of gilled mushrooms in the Agaricus and Lepiota Family (pp. 500-525). The reason of selecting this dataset is that this problem is related to classification which is a large part application in data science. And, it is also a complement to project – MovieLens that we can cover each part of what we have learnt from the course.
+
+The mushroom dataset has already been well formatted from the source already. Data cleaning is only applied by removing 2 attributions prior to splitting the data to training set and test set. 10 algorithms are applied and an ensemble model combining the prior 10 different algorithms to see if it can provide improvement to our predictions.  
+
+1.	glm
+2.	lda
+3.	Naïve Bayes
+4.	svmLinear
+5.	classification
+6.	knn
+7.	gamLoess
+8.	multinom
+9.	rf
+10.	adaboost
+11.	ensemble
 
 ```{r cars}
 summary(cars)

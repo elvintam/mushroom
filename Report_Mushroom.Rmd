@@ -3,8 +3,8 @@ title: 'Data Science: Capstone CYO Project - Mushroom'
 author: "Elvin Tam"
 date: "1 May 2021"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -12,10 +12,45 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r package_data, include=FALSE}
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(caret)) install.packages("caret", repos = "http://cran.us.r-project.org")
+if(!require(data.table)) install.packages("data.table", repos = "http://cran.us.r-project.org")
+if(!require(DataExplorer)) install.packages("DataExplorer", repos = "http://cran.us.r-project.org")
+
 library(tidyverse)
 library(caret)
 library(data.table)
+library(DataExplorer)
 library(knitr)
+
+ifelse(file.exists(".\\data\\agaricus-lepiota.data"),
+  { 
+    dl <- ".\\data\\agaricus-lepiota.data"
+  },
+  {
+    dl <- tempfile()
+    download.file("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", dl)
+  })
+
+mushroom <- fread(text = readLines(dl), header = FALSE, stringsAsFactors = TRUE,
+                 col.names = c(
+                   "class","cap_shape",
+                   "cap_surface","cap_color",
+                   "bruises","odor","gill_attachment",
+                   "gill_spacing","gill_size","gill_color",
+                   "stalk_shape","stalk_root","stalk_surface_above_ring",
+                   "stalk_surface_below_ring","stalk_color_above_ring",
+                   "stalk_color_below_ring","veil_type","veil_color",
+                   "ring_number","ring_type","spore_print_color",
+                   "population","habitat"))
+
+
+mushroom <- as.data.frame(mushroom)
+rm(dl)
+
+
+
+
 
 ```
 
@@ -43,29 +78,41 @@ The mushroom dataset has already been well formatted from the source already. Da
 10.	adaboost
 11.	ensemble
 
-# 1. Data Cleaning
+## 1. Data Cleaning
 
-Mushroom data set contains 23 columns of 1 class and 22 attributes related to cap, bruises, odor, gill, stalk, veil, ring, spore color, population and habitat. According to description from the source, there is data missing in column stalk root. The missing data point is marked “?” from the source already. Veil type is reported 1 attribute only. Both stalk root and veil type is removed prior to following steps.
+Mushroom data set contains 23 columns of 1 class and 22 attributes related to cap, bruises, odor, gill, stalk, veil, ring, spore color, population and habitat of 8,124 observations. 
 
-class, cap_shape, cap_surface,cap_color, bruises, odor, gill_attachment, gill_spacing, gill_size, gill_color, stalk_shape, stalk_root, stalk_surface_above_ring, stalk_surface_below_ring, stalk_color_above_ring, stalk_color_below_ring, veil_type, veil_color, ring_number, ring_type, spore_print_color, population, habitat
-
-[show str of mushroom]
-
-[show summary of mushroom]
-
-
-
-
-```{r cars}
-summary(cars)
+```{r str, echo=FALSE}
+str(mushroom)
+summary(mushroom)
 ```
 
-## Including Plots
+According to description from the source, there is data missing in the attribute of stalk root. The missing data point is marked “?” from the source already. Veil type is reported 1 level only. As a result, both stalk root and veil type are removed prior to we start data exploration & modeling.
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r remove, echo=TRUE}
+mushroom <- mushroom %>% select(-veil_type, -stalk_root)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## 2. Data Exploration
+
+```{r dataExplorer, echo=FALSE}
+plot_intro(mushroom)
+
+plot_missing(mushroom)
+
+plot_str(mushroom)
+
+plot_bar(mushroom, nrow = 2L, ncol = 4L)
+
+plot_bar(mushroom, by = "class", nrow = 2L, ncol = 4L)
+
+plot_correlation(mushroom, maxcat = 5L)
+```
+
+## 3. Modeling Approach
+
+# Result
+a results section that presents the modeling results and discusses the model performance
+
+# Conclusion
+a conclusion section that gives a brief summary of the report, its limitations and future work

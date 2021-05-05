@@ -1,10 +1,10 @@
 ---
 title: 'Data Science: Capstone CYO Project - Mushroom'
 author: "Elvin Tam"
-date: "1 May 2021"
+date: "15 May 2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -44,14 +44,8 @@ mushroom <- fread(text = readLines(dl), header = FALSE, stringsAsFactors = TRUE,
                    "ring_number","ring_type","spore_print_color",
                    "population","habitat"))
 
-
 mushroom <- as.data.frame(mushroom)
 rm(dl)
-
-
-
-
-
 ```
 
 ```{r mushroompic, echo = FALSE}
@@ -95,21 +89,28 @@ mushroom <- mushroom %>% select(-veil_type, -stalk_root)
 
 ## 2. Data Exploration
 
-```{r dataExplorer, echo=FALSE}
+Talk about missing
+
+```{r dataExplorer1, echo=FALSE}
 plot_intro(mushroom)
-
 plot_missing(mushroom)
+```
 
-plot_str(mushroom)
+talk about frequency & correlation
 
-plot_bar(mushroom, nrow = 2L, ncol = 4L)
+```{r dataExplorer2, echo=FALSE}
 
-plot_bar(mushroom, by = "class", nrow = 2L, ncol = 4L)
+plot_bar(mushroom, nrow = 3L, ncol = 4L)
+
+plot_bar(mushroom, by = "class", nrow = 3L, ncol = 4L)
 
 plot_correlation(mushroom, maxcat = 5L)
 ```
 
 ## 3. Modeling Approach
+
+
+
 
 # Result
 a results section that presents the modeling results and discusses the model performance

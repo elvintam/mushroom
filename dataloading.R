@@ -66,7 +66,7 @@ plot_prcomp(mushroom)
 # $page_0 to control page
 
 #
-create_report(mushroom)
+#create_report(mushroom)
 
 mushroom <- mushroom %>% select(-veil_type, -stalk_root)
 
@@ -78,97 +78,4 @@ test_set <- mushroom[test_index,]
 train_set <- mushroom[-test_index,]
 
 rm(test_index)
-
-
-##### Question 6.1 for reference
-
-library(tidyverse)
-
-models <- c("glm", "lda", "naive_bayes", "svmLinear", "knn", "gamLoess", "multinom", "qda", "rf", "adaboost")
-
-library(caret)
-library(dslabs)
-
-# set.seed(1) # if using R 3.5 or earlier
-set.seed(1, sample.kind = "Rounding") # if using R 3.6 or later
-data("mnist_27")
-
-fits <- lapply(models, function(model){
-  print(model)
-  train(y ~ ., method = model, data = mnist_27$train)
-})
-
-names(fits) <- models
-
-result <- sapply(fits, function(model){
-  y_hat <- predict(model, mnist_27$test)
-})
-
-###Q2
-nrow(result)
-ncol(result)
-
-length(mnist_27$test$y)
-length(models)
-
-colindex <- seq(1, 10, 1)
-
-length(as.factor(result[,1]))
-length(mnist_27$test$y)
-
-###Q3
-result_accuracy <- sapply(colindex, function(x){
-  confusionMatrix(as.factor(result[,x]), mnist_27$test$y)$overall["Accuracy"]  
-})
-
-mean(result_accuracy)
-
-
-###Q4
-
-result_ensemble <- ifelse(rowMeans(result[] == "7") >= 0.5, "7", "2")
-
-result_ensemble
-
-mean(result_ensemble == mnist_27$test$y)
-
-
-###Q5
-
-names(result_accuracy) <- models
-
-result_enemble_accuracy <- mean(result_ensemble == mnist_27$test$y)
-
-sum(result_accuracy >= result_enemble_accuracy)
-
-which(result_accuracy >= result_enemble_accuracy)
-
-###Q6
-
-min_accuracy <- sapply(seq(1,10,1), function(x){
-  min(fits[[x]]$results$Accuracy)
-})
-
-mean(min_accuracy)
-
-###Q7
-
-#names(min_accuracy) <- models
-
-min_accuracy
-
-
-model_select <- which(min_accuracy >= 0.8)
-
-length(model_select)
-
-result_ensemble_q7 <- sapply(seq(1,200,1), function(x){
-  ifelse(sum(result[x,model_select] == "7")/length(model_select) > 0.5, "7", "2")
-})
-
-result_ensemble_q7 <- ifelse(rowMeans(result[,model_select] == "7") >0.5, "7", "2")
-
-result_ensemble_q7
-
-mean(result_ensemble_q7 == mnist_27$test$y)
 

@@ -58,7 +58,7 @@ CREDIT: GETTY IMAGES
 
 In this report, our goal is to predict the edibility (class: edible / poisonous) of mushroom basing on attribution information. Data set includes descriptions of hypothetical samples corresponding to 23 species of gilled mushrooms in the Agaricus and Lepiota Family (pp. 500-525). The reason of selecting this dataset is that this problem is related to classification which is a large part of application in data science. And, it is also a complement to project – MovieLens that we can cover each part of what we have learnt from the course.
 
-The mushroom dataset has already been well formatted from the source already. Data cleaning is only applied by removing 2 attributes prior to splitting the data to training set and test set. 10 algorithms are applied and an ensemble model combining the prior 10 different algorithms to see if it can provide improvement to our predictions.  
+The mushroom dataset has already been well formatted. Process of data cleaning is only removing 2 attributes prior to splitting the data to training set and test set. 10 algorithms are applied and an ensemble model combining the prior 10 different algorithms to see if it can provide improvement to our predictions.  
 
 1.	glm
 2.	lda
@@ -81,7 +81,7 @@ str(mushroom)
 summary(mushroom)
 ```
 
-According to description from the source, there is data missing in the attribute of stalk root. The missing data point is marked “?” from the source already. Veil type is reported 1 level only. As a result, both stalk root and veil type are removed prior to we start data exploration & modeling.
+According to description from the source, there is data missing in the attribute of stalk root. The missing data point is marked “?” from the source already. Veil type is reported 1 level only. As a result, both stalk root and veil type are removed before we start data exploration & modeling.
 
 ```{r remove, echo=TRUE}
 mushroom <- mushroom %>% select(-veil_type, -stalk_root)
@@ -89,7 +89,9 @@ mushroom <- mushroom %>% select(-veil_type, -stalk_root)
 
 ## 2. Data Exploration
 
-Talk about missing
+We use Data Explorer package to do data exploration. By using this package, it provides a standardized method for illustrating the data.
+
+From below 2 charts, we can see that the mushroom data is discrete with no data missing.
 
 ```{r dataExplorer1, echo=FALSE}
 plot_intro(mushroom)
@@ -97,6 +99,18 @@ plot_missing(mushroom)
 ```
 
 talk about frequency & correlation
+
+class edible poisonalbe
+
+As we can see, both classes are equally distributed and balanced.
+
+gill_attachment, gill_spacing, veil_color, ring_number
+
+
+veil-type: is a constant variable so we can delete it
+odor: is highly correlated with the class so we should take care
+correlation: there is high correlation between veil-color, gill-attachment and stalk-color-above-ring
+
 
 ```{r dataExplorer2, echo=FALSE}
 
@@ -111,6 +125,9 @@ plot_correlation(mushroom, maxcat = 5L)
 
 
 
+
+
+So among all classification model Random Forest Classification has highest accuracy score = 99.75%.
 
 # Result
 a results section that presents the modeling results and discusses the model performance

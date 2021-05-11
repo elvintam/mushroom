@@ -89,7 +89,7 @@ mushroom <- mushroom %>% select(-veil_type, -stalk_root)
 
 ## 2. Data Exploration
 
-We use Data Explorer package to do data exploration. By using this package, it provides a standardized method for illustrating the data.
+We will use Data Explorer package in the process of data exploration. By using this package, it provides a standardized method to get the insights from the dataset. 
 
 From below 2 charts, we can see that the mushroom data is discrete with no data missing.
 
@@ -98,13 +98,19 @@ plot_intro(mushroom)
 plot_missing(mushroom)
 ```
 
-talk about frequency & correlation
+From below 2 charts, we can see how many mushrooms belong to each category in each attribute and among those how many are edible and how many are poisonous. In the attribute of class which we are going to predict, we can say this feature is roughly equal distributed.
 
-class edible poisonalbe
+```{r dataExplorer2, echo=FALSE}
+plot_bar(mushroom, nrow = 3L, ncol = 4L)
+plot_bar(mushroom, by = "class", nrow = 3L, ncol = 4L)
+```
 
-As we can see, both classes are equally distributed and balanced.
 
-gill_attachment, gill_spacing, veil_color, ring_number
+
+talk about correlation and 
+
+
+
 
 
 veil-type: is a constant variable so we can delete it
@@ -112,12 +118,14 @@ odor: is highly correlated with the class so we should take care
 correlation: there is high correlation between veil-color, gill-attachment and stalk-color-above-ring
 
 
-```{r dataExplorer2, echo=FALSE}
 
-plot_bar(mushroom, nrow = 3L, ncol = 4L)
 
-plot_bar(mushroom, by = "class", nrow = 3L, ncol = 4L)
 
+
+
+
+
+```{r dataExplorer3, echo=FALSE}
 plot_correlation(mushroom, maxcat = 5L)
 ```
 

@@ -98,7 +98,7 @@ plot_intro(mushroom)
 plot_missing(mushroom)
 ```
 
-From below 2 charts, we can see how many mushrooms belong to each category in each attribute and among those how many are edible and how many are poisonous. In the attribute of class which we are going to predict, we can say this feature is roughly equal distributed.
+From below 2 charts, we can see how many mushrooms belong to each category in each attribute and among those how many are edible and how many are poisonous. In the attribute of class which we are going to predict, we can say this feature is roughly equal distributed. However, observations are mainly clustered in one category in gill_attachment, gill_spacing, veil_color and ring_number.
 
 ```{r dataExplorer2, echo=FALSE}
 plot_bar(mushroom, nrow = 3L, ncol = 4L)

@@ -3,8 +3,8 @@ title: 'Data Science: Capstone CYO Project - Mushroom'
 author: "Elvin Tam"
 date: "15 May 2021"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -60,18 +60,6 @@ In this report, our goal is to predict the edibility (class: edible / poisonous)
 
 The mushroom dataset has already been well formatted. Process of data cleaning is only removing 2 attributes prior to splitting the data to training set and test set. 10 algorithms are applied and an ensemble model combining the prior 10 different algorithms to see if it can provide improvement to our predictions.  
 
-1.	glm
-2.	lda
-3.	Naïve Bayes
-4.	svmLinear
-5.	classification
-6.	knn
-7.	gamLoess
-8.	multinom
-9.	rf
-10.	adaboost
-11.	ensemble
-
 ## 1. Data Cleaning
 
 Mushroom data set contains 23 columns of 1 class and 22 attributes related to cap, bruises, odor, gill, stalk, veil, ring, spore color, population and habitat of 8,124 observations. 
@@ -81,7 +69,7 @@ str(mushroom)
 summary(mushroom)
 ```
 
-According to description from the source, there is data missing in the attribute of stalk root. The missing data point is marked “?” from the source already. Veil type is reported 1 level only. As a result, both stalk root and veil type are removed before we start data exploration & modeling.
+According to description from the source, there is data missing in the attribute of stalk_root. The missing data point is marked “?” from the source already. On the other hand, veil_type is a constant. Both stalk_root and veil_type are removed before we start data exploration & modeling.
 
 ```{r remove, echo=TRUE}
 mushroom <- mushroom %>% select(-veil_type, -stalk_root)
@@ -98,32 +86,14 @@ plot_intro(mushroom)
 plot_missing(mushroom)
 ```
 
-From below 2 charts, we can see how many mushrooms belong to each category in each attribute and among those how many are edible and how many are poisonous. In the attribute of class which we are going to predict, we can say this feature is roughly equal distributed. However, observations are mainly clustered in one category in gill_attachment, gill_spacing, veil_color and ring_number.
+From below frequency and percentage charts, we can see how many observations belong to each category in each attribute and among those how many are edible or poisonous. In class which we are going to predict, we can say the feature is roughly equal distributed. However, observations are mainly clustered in one category in gill_attachment, gill_spacing, veil_color and ring_number.
 
 ```{r dataExplorer2, echo=FALSE}
 plot_bar(mushroom, nrow = 3L, ncol = 4L)
 plot_bar(mushroom, by = "class", nrow = 3L, ncol = 4L)
 ```
 
-
-
-talk about correlation and 
-
-
-
-
-
-veil-type: is a constant variable so we can delete it
-odor: is highly correlated with the class so we should take care
-correlation: there is high correlation between veil-color, gill-attachment and stalk-color-above-ring
-
-
-
-
-
-
-
-
+From correlation matrix (filtered category less than 5), there is high correlation between veil_color and gill_attachment, stalk_surface_above_ring and bruises.
 
 ```{r dataExplorer3, echo=FALSE}
 plot_correlation(mushroom, maxcat = 5L)
@@ -131,6 +101,31 @@ plot_correlation(mushroom, maxcat = 5L)
 
 ## 3. Modeling Approach
 
+```{r datasplit, echo=FALSE, warning=FALSE}
+set.seed(12345, sample.kind="Rounding")
+test_index <- createDataPartition(y = mushroom$class, times = 1,
+                                  p = 0.2, list = FALSE)
+test_set <- mushroom[test_index,]
+train_set <- mushroom[-test_index,]
+
+rm(test_index)
+```
+
+We will use 10 algorithms and 1 ensemble model to see if this can provide improvement to our predictions. Algorithms are listed below.
+
+3-1.	glm <br>
+3-2.	lda <br>
+3-3.	Naïve Bayes <br>
+3-4.	svmLinear <br>
+3-5.	classification <br>
+3-6.	knn <br>
+3-7.	gamLoess <br>
+3-8.	multinom <br>
+3-9.	rf <br>
+3-10.	adaboost <br>
+3-11.	ensemble <br>
+
+### 3-1. Generalized Linear Model (glm)
 
 
 

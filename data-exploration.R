@@ -2,14 +2,13 @@ library(tidyverse)
 library(caret)
 
 
-mushroom %>% ggplot(aes(class)) + geom_bar(aes(fill = class), stat = "count") +
+mushroom %>% ggplot(aes(class, fill = class)) + geom_bar(stat = "count") +
              stat_count(geom = "text", colour = "black", size = 4,
                         aes(label = ..count..), position= position_stack(vjust=0.5))
 
-mushroom %>% ggplot(aes(class)) + 
-  geom_bar(aes(fill = class)) +
-  coord_flip() +
-  facet_grid(scales = "free_x")
+mushroom %>% ggplot(aes(cap_shape , fill = class)) + 
+  geom_bar(position = "dodge") #
+  #facet_grid(scales = "free_x")
   # stat_count(geom = "text", colour = "black", size = 4,
   #            aes(label = ..count..), position= position_stack(vjust=0.5))
 

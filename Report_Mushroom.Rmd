@@ -3,8 +3,8 @@ title: 'Data Science: Capstone CYO Project - Mushroom'
 author: "Elvin Tam"
 date: "15 May 2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -125,8 +125,57 @@ We will use 10 algorithms and 1 ensemble model to see if this can provide improv
 3-10.	adaboost <br>
 3-11.	ensemble <br>
 
-### 3-1. Generalized Linear Model (glm)
+### 3-1. glm
 
+```{r glm, echo=FALSE, warning=TRUE}
+fit_glm <- train(class ~ ., method = "glm", data = train_set)
+
+warnings()
+
+s <- summary(fit_glm)
+
+s
+
+s$aliased[which(s$aliased == TRUE)]
+
+train_set %>% filter(stalk_color_above_ring == "c") %>% nrow()
+train_set %>% filter(stalk_color_below_ring == "c") %>% nrow()
+train_set %>% filter(stalk_color_below_ring == "o") %>% nrow()
+train_set %>% filter(veil_color == "w") %>% nrow()
+train_set %>% filter(veil_color == "y") %>% nrow()
+train_set %>% filter(ring_number == "t") %>% nrow()
+train_set %>% filter(ring_type == "n") %>% nrow()
+train_set %>% filter(spore_print_color == "h") %>% nrow()
+
+
+train_set <- train_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, 
+                                  -veil_color, -ring_number, -ring_type, -spore_print_color)
+test_set <- test_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, 
+                                -veil_color, -ring_number, -ring_type, -spore_print_color)
+
+fit_glm <- train(class ~ ., method = "glm", data = train_set)# maxit = 200)
+
+warnings()
+
+s <- summary(fit_glm)
+
+s
+
+s$aliased[which(s$aliased == TRUE)]
+
+y_hat_glm <- predict(fit_glm, test_set)
+
+cm <- confusionMatrix(y_hat_glm, test_set$class)
+
+model_results <- tibble(Method = "glm",
+                        Accuracy = cm$overall["Accuracy"],
+                        Kappa = cm$overall["Kappa"],
+                        Sensitivity = cm$byClass["Sensitivity"],
+                        Specificity = cm$byClass["Specificity"])
+
+model_results %>% knitr::kable()
+
+```
 
 
 

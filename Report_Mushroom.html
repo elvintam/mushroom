@@ -271,8 +271,392 @@ pre code {
 <h2>3. Modeling Approach</h2>
 <p>We will use 10 algorithms and 1 ensemble model to see if this can provide improvement to our predictions. Algorithms are listed below.</p>
 <p>3-1. glm <br> 3-2. lda <br> 3-3. Naïve Bayes <br> 3-4. svmLinear <br> 3-5. classification <br> 3-6. knn <br> 3-7. gamLoess <br> 3-8. multinom <br> 3-9. rf <br> 3-10. adaboost <br> 3-11. ensemble <br></p>
-<div id="generalized-linear-model-glm" class="section level3">
-<h3>3-1. Generalized Linear Model (glm)</h3>
+<div id="glm" class="section level3">
+<h3>3-1. glm</h3>
+<pre><code>## Warning in (function (kind = NULL, normal.kind = NULL, sample.kind = NULL) :
+## non-uniform &#39;Rounding&#39; sampler used</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## 
+## Call:
+## NULL
+## 
+## Deviance Residuals: 
+##        Min          1Q      Median          3Q         Max  
+## -1.141e-05  -2.364e-06  -8.477e-07   2.286e-06   2.359e-05  
+## 
+## Coefficients: (8 not defined because of singularities)
+##                             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)               -8.071e+01  2.901e+05   0.000    1.000
+## cap_shapec                 2.017e+00  1.463e+05   0.000    1.000
+## cap_shapef                -7.377e-01  2.543e+04   0.000    1.000
+## cap_shapek                -7.998e-01  2.720e+04   0.000    1.000
+## cap_shapes                -6.907e-01  8.700e+04   0.000    1.000
+## cap_shapex                -6.972e-01  2.482e+04   0.000    1.000
+## cap_surfaceg               3.707e+00  1.900e+05   0.000    1.000
+## cap_surfaces               1.795e-01  1.492e+04   0.000    1.000
+## cap_surfacey               8.440e-03  1.146e+04   0.000    1.000
+## cap_colorc                -2.370e+00  6.558e+04   0.000    1.000
+## cap_colore                -4.315e-01  3.882e+04   0.000    1.000
+## cap_colorg                -8.780e-02  3.679e+04   0.000    1.000
+## cap_colorn                -4.820e-01  3.783e+04   0.000    1.000
+## cap_colorp                -3.552e-02  4.544e+04   0.000    1.000
+## cap_colorr                 4.301e-01  1.354e+05   0.000    1.000
+## cap_coloru                 4.439e-01  1.430e+05   0.000    1.000
+## cap_colorw                 4.546e-01  3.800e+04   0.000    1.000
+## cap_colory                 1.636e-01  3.949e+04   0.000    1.000
+## bruisest                  -3.716e+01  1.294e+05   0.000    1.000
+## odorc                      5.654e+01  8.688e+04   0.001    0.999
+## odorf                      1.504e+01  1.532e+05   0.000    1.000
+## odorl                     -4.720e-02  2.694e+04   0.000    1.000
+## odorm                     -1.072e+02  3.002e+05   0.000    1.000
+## odorn                     -3.642e+01  1.303e+05   0.000    1.000
+## odorp                      5.326e+01  6.635e+04   0.001    0.999
+## odors                      1.501e+01  1.549e+05   0.000    1.000
+## odory                      1.501e+01  1.549e+05   0.000    1.000
+## gill_attachmentf          -2.794e-01  1.218e+05   0.000    1.000
+## gill_spacingw             -4.076e+01  7.594e+04  -0.001    1.000
+## gill_sizen                 3.211e+00  7.264e+04   0.000    1.000
+## gill_colore                8.503e+01  1.805e+05   0.000    1.000
+## gill_colorg                8.529e+01  1.712e+05   0.000    1.000
+## gill_colorh                8.524e+01  1.716e+05   0.000    1.000
+## gill_colork                8.548e+01  1.720e+05   0.000    1.000
+## gill_colorn                8.508e+01  1.724e+05   0.000    1.000
+## gill_coloro                8.493e+01  1.834e+05   0.000    1.000
+## gill_colorp                8.507e+01  1.718e+05   0.000    1.000
+## gill_colorr                8.531e+01  1.952e+05   0.000    1.000
+## gill_coloru                8.499e+01  1.730e+05   0.000    1.000
+## gill_colorw                8.504e+01  1.713e+05   0.000    1.000
+## gill_colory                8.495e+01  1.808e+05   0.000    1.000
+## stalk_shapet               4.153e+01  9.032e+04   0.000    1.000
+## stalk_surface_above_ringk  8.935e-01  2.811e+04   0.000    1.000
+## stalk_surface_above_rings  3.796e-01  2.117e+04   0.000    1.000
+## stalk_surface_above_ringy -4.073e+01  1.343e+05   0.000    1.000
+## stalk_surface_below_ringk  2.964e-01  2.766e+04   0.000    1.000
+## stalk_surface_below_rings  3.079e-01  2.118e+04   0.000    1.000
+## stalk_surface_below_ringy  4.925e+00  6.413e+04   0.000    1.000
+## stalk_color_above_ringc           NA         NA      NA       NA
+## stalk_color_above_ringe    1.053e-01  6.444e+04   0.000    1.000
+## stalk_color_above_ringg   -5.323e-02  3.421e+04   0.000    1.000
+## stalk_color_above_ringn   -3.638e-03  2.708e+04   0.000    1.000
+## stalk_color_above_ringo   -7.615e+01  2.274e+05   0.000    1.000
+## stalk_color_above_ringp    2.002e-04  2.662e+04   0.000    1.000
+## stalk_color_above_ringw    9.813e-02  3.033e+04   0.000    1.000
+## stalk_color_above_ringy    6.090e-01  1.991e+05   0.000    1.000
+## stalk_color_below_ringc           NA         NA      NA       NA
+## stalk_color_below_ringe    6.311e-01  6.577e+04   0.000    1.000
+## stalk_color_below_ringg    3.680e-01  3.675e+04   0.000    1.000
+## stalk_color_below_ringn   -2.756e-01  2.527e+04   0.000    1.000
+## stalk_color_below_ringo           NA         NA      NA       NA
+## stalk_color_below_ringp    3.433e-01  2.977e+04   0.000    1.000
+## stalk_color_below_ringw    6.088e-01  3.319e+04   0.000    1.000
+## stalk_color_below_ringy    2.672e+00  1.039e+05   0.000    1.000
+## veil_coloro                1.484e-01  5.204e+04   0.000    1.000
+## veil_colorw                       NA         NA      NA       NA
+## veil_colory                       NA         NA      NA       NA
+## ring_numbero               3.816e+00  1.329e+05   0.000    1.000
+## ring_numbert                      NA         NA      NA       NA
+## ring_typef                -7.608e-01  1.631e+05   0.000    1.000
+## ring_typel                 4.245e+00  1.251e+05   0.000    1.000
+## ring_typen                        NA         NA      NA       NA
+## ring_typep                -1.077e+00  8.723e+04   0.000    1.000
+## spore_print_colorh                NA         NA      NA       NA
+## spore_print_colork        -2.625e-02  7.357e+04   0.000    1.000
+## spore_print_colorn        -2.430e-02  7.246e+04   0.000    1.000
+## spore_print_coloro        -6.728e-02  7.420e+04   0.000    1.000
+## spore_print_colorr         9.600e+01  2.104e+05   0.000    1.000
+## spore_print_coloru         9.818e-03  1.088e+05   0.000    1.000
+## spore_print_colorw         4.527e+01  1.600e+05   0.000    1.000
+## spore_print_colory        -2.732e-02  7.353e+04   0.000    1.000
+## populationc                8.064e+01  1.355e+05   0.001    1.000
+## populationn                4.908e-01  4.759e+04   0.000    1.000
+## populations               -3.733e-01  3.111e+04   0.000    1.000
+## populationv               -1.275e+00  3.994e+04   0.000    1.000
+## populationy               -1.389e+00  4.058e+04   0.000    1.000
+## habitatg                   5.815e-01  2.579e+04   0.000    1.000
+## habitatl                  -6.942e-01  2.133e+04   0.000    1.000
+## habitatm                   1.911e+00  5.579e+04   0.000    1.000
+## habitatp                  -1.732e-01  1.780e+04   0.000    1.000
+## habitatu                   5.936e-01  4.228e+04   0.000    1.000
+## habitatw                  -8.350e+01  1.968e+05   0.000    1.000
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 8.9997e+03  on 6497  degrees of freedom
+## Residual deviance: 4.2953e-08  on 6414  degrees of freedom
+## AIC: 168
+## 
+## Number of Fisher Scoring iterations: 25</code></pre>
+<pre><code>## stalk_color_above_ringc stalk_color_below_ringc stalk_color_below_ringo 
+##                    TRUE                    TRUE                    TRUE 
+##             veil_colorw             veil_colory            ring_numbert 
+##                    TRUE                    TRUE                    TRUE 
+##              ring_typen      spore_print_colorh 
+##                    TRUE                    TRUE</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre><code>## [1] 146</code></pre>
+<pre><code>## [1] 6344</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre><code>## [1] 470</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre><code>## [1] 1312</code></pre>
+<pre><code>## Warning in (function (kind = NULL, normal.kind = NULL, sample.kind = NULL) :
+## non-uniform &#39;Rounding&#39; sampler used</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<pre><code>## 
+## Call:
+## NULL
+## 
+## Deviance Residuals: 
+##        Min          1Q      Median          3Q         Max  
+## -2.525e-05  -2.226e-06  -2.100e-08   2.116e-06   3.727e-05  
+## 
+## Coefficients:
+##                             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)               -1.664e+02  1.260e+05  -0.001    0.999
+## cap_shapec                 9.738e-01  1.680e+05   0.000    1.000
+## cap_shapef                -1.087e+00  1.563e+04   0.000    1.000
+## cap_shapek                -1.114e+00  1.817e+04   0.000    1.000
+## cap_shapes                -2.264e+00  7.429e+04   0.000    1.000
+## cap_shapex                -1.290e+00  1.603e+04   0.000    1.000
+## cap_surfaceg               4.889e-01  1.975e+05   0.000    1.000
+## cap_surfaces               2.038e-01  1.226e+04   0.000    1.000
+## cap_surfacey              -5.661e-02  1.007e+04   0.000    1.000
+## cap_colorc                -3.651e+00  5.749e+04   0.000    1.000
+## cap_colore                -1.623e+00  3.065e+04   0.000    1.000
+## cap_colorg                -1.348e+00  2.810e+04   0.000    1.000
+## cap_colorn                -1.558e+00  2.873e+04   0.000    1.000
+## cap_colorp                -4.781e-01  2.632e+04   0.000    1.000
+## cap_colorr                -4.012e+00  9.612e+04   0.000    1.000
+## cap_coloru                -3.856e+00  1.064e+05   0.000    1.000
+## cap_colorw                -4.874e-01  2.605e+04   0.000    1.000
+## cap_colory                -6.139e-01  3.063e+04   0.000    1.000
+## bruisest                   3.360e+01  4.344e+04   0.001    0.999
+## odorc                      1.242e+02  6.851e+04   0.002    0.999
+## odorf                      1.570e+02  5.843e+04   0.003    0.998
+## odorl                     -5.699e-02  2.344e+04   0.000    1.000
+## odorm                      1.120e+02  1.420e+05   0.001    0.999
+## odorn                      7.573e+01  4.411e+04   0.002    0.999
+## odorp                      9.330e+01  7.136e+04   0.001    0.999
+## odors                      1.570e+02  6.288e+04   0.002    0.998
+## odory                      1.570e+02  6.293e+04   0.002    0.998
+## gill_attachmentf          -1.578e+01  1.311e+05   0.000    1.000
+## gill_spacingw             -1.321e+01  3.629e+04   0.000    1.000
+## gill_sizen                 4.659e+01  5.007e+04   0.001    0.999
+## gill_colore                4.181e+01  8.219e+04   0.001    1.000
+## gill_colorg                4.280e+01  6.187e+04   0.001    0.999
+## gill_colorh                4.220e+01  6.089e+04   0.001    0.999
+## gill_colork                4.301e+01  6.495e+04   0.001    0.999
+## gill_colorn                4.196e+01  6.102e+04   0.001    0.999
+## gill_coloro                4.250e+01  9.426e+04   0.000    1.000
+## gill_colorp                4.177e+01  6.012e+04   0.001    0.999
+## gill_colorr                4.590e+01  9.472e+04   0.000    1.000
+## gill_coloru                4.144e+01  6.195e+04   0.001    0.999
+## gill_colorw                4.184e+01  6.160e+04   0.001    0.999
+## gill_colory                4.262e+01  8.040e+04   0.001    1.000
+## stalk_shapet              -3.092e+00  2.553e+04   0.000    1.000
+## stalk_surface_above_ringk  9.114e-01  3.141e+04   0.000    1.000
+## stalk_surface_above_rings -2.646e-02  2.650e+04   0.000    1.000
+## stalk_surface_above_ringy  3.885e-01  7.873e+04   0.000    1.000
+## stalk_surface_below_ringk  1.380e+01  3.349e+04   0.000    1.000
+## stalk_surface_below_rings  1.385e+01  3.114e+04   0.000    1.000
+## stalk_surface_below_ringy  4.556e+01  3.492e+04   0.001    0.999
+## populationc                1.098e+01  1.063e+05   0.000    1.000
+## populationn               -3.988e+00  4.403e+04   0.000    1.000
+## populations               -3.685e+00  4.244e+04   0.000    1.000
+## populationv               -2.998e+00  4.746e+04   0.000    1.000
+## populationy               -3.846e+00  4.706e+04   0.000    1.000
+## habitatg                   4.285e+01  2.448e+04   0.002    0.999
+## habitatl                  -4.733e-01  2.120e+04   0.000    1.000
+## habitatm                   7.001e+01  6.209e+04   0.001    0.999
+## habitatp                  -3.721e-01  1.468e+04   0.000    1.000
+## habitatu                  -1.595e+01  3.134e+04  -0.001    1.000
+## habitatw                  -1.857e+01  9.844e+04   0.000    1.000
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 8.9997e+03  on 6497  degrees of freedom
+## Residual deviance: 6.6182e-08  on 6439  degrees of freedom
+## AIC: 118
+## 
+## Number of Fisher Scoring iterations: 25</code></pre>
+<pre><code>## named logical(0)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="right">Accuracy</th>
+<th align="right">Kappa</th>
+<th align="right">Sensitivity</th>
+<th align="right">Specificity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">glm</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
 <p>So among all classification model Random Forest Classification has highest accuracy score = 99.75%.</p>
 </div>
 </div>

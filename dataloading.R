@@ -68,8 +68,6 @@ plot_prcomp(mushroom)
 #
 #create_report(mushroom)
 
-mushroom <- mushroom %>% select(-veil_type, -stalk_root)
-
 set.seed(12345, sample.kind="Rounding")
 test_index <- createDataPartition(y = mushroom$class, times = 1,
                                   p = 0.2, list = FALSE)
@@ -77,4 +75,3 @@ test_set <- mushroom[test_index,]
 train_set <- mushroom[-test_index,]
 
 rm(test_index)
-

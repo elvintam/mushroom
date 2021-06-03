@@ -111,7 +111,7 @@ train_set <- mushroom[-test_index,]
 rm(test_index)
 ```
 
-We will use 10 algorithms and 1 ensemble model to see if this can provide improvement to our predictions. Algorithms are listed below.
+We will use 10 algorithms and 1 ensemble model to evaluate if this can provide improvement to our predictions. Algorithms are listed below.
 
 3-1.	glm <br>
 3-2.	lda <br>

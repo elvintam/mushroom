@@ -139,6 +139,8 @@ In glm model, we get warning message of "Warning: glm.fit: algorithm did not con
 
 ```{r glm1, echo=TRUE, warning=FALSE}
 
+datarecovery()
+
 fit_glm <- train(class ~ ., method = "glm", data = train_set)
 
 s <- summary(fit_glm)
@@ -269,7 +271,7 @@ model_results %>% knitr::kable()
 
 ### 3-5.	Classification Model
 
-```{r Classification, echo=TRUE, warning=FALSE}
+```{r CM, echo=TRUE, warning=FALSE}
 
 datarecovery()
 
@@ -395,7 +397,7 @@ model_results %>% knitr::kable()
 
 ### 3-10.	adaboost
 
-```{r knn, echo=TRUE, warning=FALSE}
+```{r adaboost, echo=TRUE, warning=FALSE}
 
 datarecovery()
 

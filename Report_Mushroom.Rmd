@@ -1,7 +1,7 @@
 ---
 title: 'Data Science: Capstone CYO Project - Mushroom'
 author: "Elvin Tam"
-date: "15 May 2021"
+date: "10 June 2021"
 output:
   html_document: default
   pdf_document: default
@@ -102,13 +102,19 @@ plot_correlation(mushroom, maxcat = 5L)
 ## 3. Modeling Approach
 
 ```{r datasplit, echo=FALSE, warning=FALSE}
-set.seed(12345, sample.kind="Rounding")
-test_index <- createDataPartition(y = mushroom$class, times = 1,
-                                  p = 0.2, list = FALSE)
-test_set <- mushroom[test_index,]
-train_set <- mushroom[-test_index,]
 
-rm(test_index)
+datarecovery <- function(){
+  set.seed(12345, sample.kind="Rounding")
+  test_index <- createDataPartition(y = mushroom$class, times = 1,
+                                    p = 0.2, list = FALSE)
+  test_set <- mushroom[test_index,]
+  train_set <- mushroom[-test_index,]
+  
+  rm(test_index)
+}
+
+datarecovery()
+
 ```
 
 We will use 10 algorithms and 1 ensemble model to evaluate if this can provide improvement to our predictions. Algorithms are listed below.
@@ -117,7 +123,7 @@ We will use 10 algorithms and 1 ensemble model to evaluate if this can provide i
 3-2.	lda <br>
 3-3.	Naïve Bayes <br>
 3-4.	svmLinear <br>
-3-5.	classification <br>
+3-5.	Classification Model <br>
 3-6.	knn <br>
 3-7.	gamLoess <br>
 3-8.	multinom <br>
@@ -127,35 +133,34 @@ We will use 10 algorithms and 1 ensemble model to evaluate if this can provide i
 
 ### 3-1. glm
 
-```{r glm, echo=FALSE, warning=TRUE}
-fit_glm <- train(class ~ ., method = "glm", data = train_set)
+Generalized Linear Model (glm) is the most common and simple model. This is the starting point of our modeling. Using Caret package, we can simply apply 10 different algorithms in a standardized way. 
 
-warnings()
+In glm model, we get warning message of "Warning: glm.fit: algorithm did not converge", "Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred" and "prediction from a rank-deficient fit may be misleading". 
+
+```{r glm1, echo=TRUE, warning=FALSE}
+
+fit_glm <- train(class ~ ., method = "glm", data = train_set)
 
 s <- summary(fit_glm)
 
 s
+```
 
+From the above Summary of Coefficients, we find that 8 coefficients are not defined (NA) because of singularities. They are listed below. 
+
+```{r glm2, echo=TRUE}
 s$aliased[which(s$aliased == TRUE)]
+```
 
-train_set %>% filter(stalk_color_above_ring == "c") %>% nrow()
-train_set %>% filter(stalk_color_below_ring == "c") %>% nrow()
-train_set %>% filter(stalk_color_below_ring == "o") %>% nrow()
-train_set %>% filter(veil_color == "w") %>% nrow()
-train_set %>% filter(veil_color == "y") %>% nrow()
-train_set %>% filter(ring_number == "t") %>% nrow()
-train_set %>% filter(ring_type == "n") %>% nrow()
-train_set %>% filter(spore_print_color == "h") %>% nrow()
+These 8 coefficients belong to 6 attributes. We will remove them and run the glm algorithm again.
 
-
+```{r glm3, echo=TRUE, warning=FALSE}
 train_set <- train_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, 
                                   -veil_color, -ring_number, -ring_type, -spore_print_color)
 test_set <- test_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, 
                                 -veil_color, -ring_number, -ring_type, -spore_print_color)
 
-fit_glm <- train(class ~ ., method = "glm", data = train_set)# maxit = 200)
-
-warnings()
+fit_glm <- train(class ~ ., method = "glm", data = train_set)
 
 s <- summary(fit_glm)
 
@@ -163,6 +168,11 @@ s
 
 s$aliased[which(s$aliased == TRUE)]
 
+```
+
+glm results are tabulated below.
+
+```{r glm4, echo=FALSE}
 y_hat_glm <- predict(fit_glm, test_set)
 
 cm <- confusionMatrix(y_hat_glm, test_set$class)
@@ -174,9 +184,263 @@ model_results <- tibble(Method = "glm",
                         Specificity = cm$byClass["Specificity"])
 
 model_results %>% knitr::kable()
-
 ```
 
+### 3-2. lda
+
+```{r lda, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_lda <- train(class ~ ., method = "lda", data = train_set)
+
+s <- summary(fit_lda)
+
+s
+
+y_hat_lda <- predict(fit_lda, test_set)
+
+cm <- confusionMatrix(y_hat_lda, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "lda",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-3.	Naïve Bayes
+
+```{r nb, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)
+
+s <- summary(fit_nb)
+
+s
+
+y_hat_nb <- predict(fit_nb, test_set)
+
+cm <- confusionMatrix(y_hat_nb, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "navie bayes",
+                        Accuracy = cm$overall["Accuracy"],
+                        Kappa = cm$overall["Kappa"],
+                        Sensitivity = cm$byClass["Sensitivity"],
+                        Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-4.	svmLinear
+
+Support Vector Machine
+
+```{r svmLinear, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_svmLinear <- train(class ~ ., method = "svmLinear", data = train_set)
+fit_svmLinear["finalModel"]
+
+s <- summary(fit_svmLinear)
+
+s
+
+y_hat_svmLinear <- predict(fit_svmLinear, test_set)
+
+cm <- confusionMatrix(y_hat_svmLinear, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "svmLinear",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-5.	Classification Model
+
+```{r Classification, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
+fit_rpart["finalModel"]
+
+s <- summary(fit_rpart)
+
+y_hat_rpart <- predict(fit_rpart, test_set)
+
+cm <- confusionMatrix(y_hat_rpart, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "rpart",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-6.	knn
+
+```{r knn, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_knn <- train(class ~ ., method = "knn", data = train_set)
+fit_knn["finalModel"]
+
+s <- summary(fit_knn)
+
+y_hat_knn <- predict(fit_knn, test_set)
+
+cm <- confusionMatrix(y_hat_knn, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "knn",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-7.	gamLoess
+
+```{r gamLoess, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_gamLoess <- train(class ~ ., method = "gamLoess", data = train_set)
+fit_gamLoess["finalModel"]
+
+s <- summary(fit_gamLoess)
+
+y_hat_gamLoess <- predict(fit_gamLoess, test_set)
+
+cm <- confusionMatrix(y_hat_gamLoess, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "gamLoess",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-8.	multinom
+
+```{r multinom, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_multinom <- train(class ~ ., method = "multinom", data = train_set)
+fit_multinom["finalModel"]
+
+s <- summary(fit_multinom)
+
+y_hat_multinom <- predict(fit_multinom, test_set)
+
+cm <- confusionMatrix(y_hat_multinom, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "multinom",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-9.	rf
+
+Random Forest
+```{r rf, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_rf <- train(class ~ ., method = "rf", data = train_set)
+fit_rf["finalModel"]
+
+s <- summary(fit_rf)
+
+y_hat_rf <- predict(fit_rf, test_set)
+
+cm <- confusionMatrix(y_hat_rf, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "rf",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-10.	adaboost
+
+```{r knn, echo=TRUE, warning=FALSE}
+
+datarecovery()
+
+fit_adaboost <- train(class ~ ., method = "adaboost", data = train_set)
+fit_adaboost["finalModel"]
+
+s <- summary(fit_adaboost)
+
+y_hat_adaboost <- predict(fit_adaboost, test_set)
+
+cm <- confusionMatrix(y_hat_adaboost, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "adaboost",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-11.	ensemble
+
+```{r ensemble, echo=TRUE, warning=FALSE}
+
+y_hat_results <- bind_cols(y_hat_glm, y_hat_lda, y_hat_nb, 
+                           y_hat_svmLinear, y_hat_rpart,
+                           y_hat_knn, y_hat_gamLoess, y_hat_multinom, 
+                           y_hat_rf, y_hat_adaboost)
+
+y_hat_ensemble <- ifelse(rowMeans(y_hat_results == "e") >0.5, "e", "p")
+
+cm <- confusionMatrix(as.factor(y_hat_ensemble), test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "ensemble",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+
+```
 
 
 So among all classification model Random Forest Classification has highest accuracy score = 99.75%.

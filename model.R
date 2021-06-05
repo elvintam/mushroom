@@ -5,7 +5,7 @@ library(caret)
 
 summary(train_set)
 str(train_set)
-
+help("warnings")
 
 datarecovery <- function(){
   set.seed(12345, sample.kind="Rounding")
@@ -32,16 +32,6 @@ s <- summary(fit_glm)
 s
 
 s$aliased[which(s$aliased == TRUE)]
-
-train_set %>% filter(stalk_color_above_ring == "c") %>% nrow()
-train_set %>% filter(stalk_color_below_ring == "c") %>% nrow()
-train_set %>% filter(stalk_color_below_ring == "o") %>% nrow()
-train_set %>% filter(veil_color == "w") %>% nrow()
-train_set %>% filter(veil_color == "y") %>% nrow()
-train_set %>% filter(ring_number == "t") %>% nrow()
-train_set %>% filter(ring_type == "n") %>% nrow()
-train_set %>% filter(spore_print_color == "h") %>% nrow()
-
 
 train_set <- train_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, 
                                   -veil_color, -ring_number, -ring_type, -spore_print_color)

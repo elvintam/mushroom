@@ -103,6 +103,14 @@ plot_correlation(mushroom, maxcat = 5L)
 
 ```{r datasplit, echo=FALSE, warning=FALSE}
 
+  set.seed(12345, sample.kind="Rounding")
+  test_index <- createDataPartition(y = mushroom$class, times = 1,
+                                    p = 0.2, list = FALSE)
+  test_set <- mushroom[test_index,]
+  train_set <- mushroom[-test_index,]
+  
+  rm(test_index)
+
 datarecovery <- function(){
   set.seed(12345, sample.kind="Rounding")
   test_index <- createDataPartition(y = mushroom$class, times = 1,
@@ -112,9 +120,6 @@ datarecovery <- function(){
   
   rm(test_index)
 }
-
-datarecovery()
-
 ```
 
 We will use 10 algorithms and 1 ensemble model to evaluate if this can provide improvement to our predictions. Algorithms are listed below.

@@ -10,21 +10,23 @@ summary(train_set)
 str(train_set)
 help("warnings")
 
-datarecovery <- function(){
-  set.seed(12345, sample.kind="Rounding")
-  test_index <- createDataPartition(y = mushroom$class, times = 1,
-                                    p = 0.2, list = FALSE)
-  test_set <- mushroom[test_index,]
-  train_set <- mushroom[-test_index,]
-  
-  rm(test_index)
-}
-
 ###########
 ### glm
 ###########
 
-datarecovery()
+
+set.seed(12345, sample.kind="Rounding")
+test_index <- createDataPartition(y = mushroom$class, times = 1,
+                                  p = 0.2, list = FALSE)
+test_set <- mushroom[test_index,]
+train_set <- mushroom[-test_index,]
+
+rm(test_index)
+
+
+###########
+### glm
+###########
 
 fit_glm <- train(class ~ ., method = "glm", data = train_set)
 
@@ -64,12 +66,10 @@ model_results <- tibble(Method = "glm",
 model_results %>% knitr::kable()
                             
 
+
 ###########
 ### lda
 ###########
-
-
-datarecovery()
 
 fit_lda <- train(class ~ ., method = "lda", data = train_set)
 
@@ -95,9 +95,6 @@ model_results %>% knitr::kable()
 ### naive_bayes
 ###########
 
-
-datarecovery()
-
 fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)
 
 s <- summary(fit_nb)
@@ -120,8 +117,6 @@ model_results %>% knitr::kable()
 ###########
 ### svmLinear
 ###########
-
-datarecovery()
 
 fit_svmLinear <- train(class ~ ., method = "svmLinear", data = train_set)
 fit_svmLinear["finalModel"]
@@ -148,8 +143,6 @@ model_results %>% knitr::kable()
 #### Classification Model
 ###########
 
-datarecovery()
-
 fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
 fit_rpart["finalModel"]
 
@@ -174,8 +167,6 @@ model_results %>% knitr::kable()
 #### knn
 ###########
 
-datarecovery()
-
 fit_knn <- train(class ~ ., method = "knn", data = train_set)
 fit_knn["finalModel"]
 
@@ -199,12 +190,12 @@ model_results %>% knitr::kable()
 #### gamLoess
 ###########
 
-datarecovery()
-
 fit_gamLoess <- train(class ~ ., method = "gamLoess", data = train_set)
-fit_gamLoess["finalModel"]
+#fit_gamLoess["finalModel"]
 
 s <- summary(fit_gamLoess)
+
+s$parametric.anova
 
 y_hat_gamLoess <- predict(fit_gamLoess, test_set)
 
@@ -219,19 +210,15 @@ model_results <- rbind(model_results,
 
 model_results %>% knitr::kable()
 
-install.packages("gam")
-plot_cond_prob(predict(fit_gamLoess, test_set, type = "prob")[,2])
-
 ###########
 #### multinom
 ###########
 
-datarecovery()
-
 fit_multinom <- train(class ~ ., method = "multinom", data = train_set)
+help(train)
 fit_multinom["finalModel"]
 
-s <- summary(fit_multinom)
+#s <- summary(fit_multinom)
 
 y_hat_multinom <- predict(fit_multinom, test_set)
 
@@ -246,14 +233,11 @@ model_results <- rbind(model_results,
 
 model_results %>% knitr::kable()
 
-
 ###########
 #### rf
 ###########
 
-datarecovery()
-
-fit_rf <- train(class ~ ., method = "rf", data = train_set)
+fit_rf <- train(class ~ ., method = "Rborist", data = train_set)
 fit_rf["finalModel"]
 
 s <- summary(fit_rf)
@@ -274,8 +258,6 @@ model_results %>% knitr::kable()
 ###########
 #### adaboost
 ###########
-
-datarecovery()
 
 fit_adaboost <- train(class ~ ., method = "adaboost", data = train_set)
 fit_adaboost["finalModel"]

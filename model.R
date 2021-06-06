@@ -1,6 +1,9 @@
 library(tidyverse)
 library(caret)
 
+if(!require(rpart.plot)) install.packages("rpart.plot", repos = "http://cran.us.r-project.org")
+library(rpart.plot)
+
 ####need to add pca ####
 
 summary(train_set)
@@ -150,7 +153,9 @@ datarecovery()
 fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
 fit_rpart["finalModel"]
 
-s <- summary(fit_rpart)
+rpart.plot(fit_rpart$finalModel)
+
+#s <- summary(f)
 
 y_hat_rpart <- predict(fit_rpart, test_set)
 
@@ -164,7 +169,6 @@ model_results <- rbind(model_results,
                               Specificity = cm$byClass["Specificity"]))
 
 model_results %>% knitr::kable()
-
 
 ###########
 #### knn
@@ -215,6 +219,8 @@ model_results <- rbind(model_results,
 
 model_results %>% knitr::kable()
 
+install.packages("gam")
+plot_cond_prob(predict(fit_gamLoess, test_set, type = "prob")[,2])
 
 ###########
 #### multinom

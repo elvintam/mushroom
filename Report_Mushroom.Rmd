@@ -125,7 +125,7 @@ We will use 10 algorithms and 1 ensemble model to evaluate if this can provide i
 3-6.	knn <br>
 3-7.	gamLoess <br>
 3-8.	multinom <br>
-3-9.	rf <br>
+3-9.	random forest <br>
 3-10.	adaboost <br>
 3-11.	ensemble <br>
 
@@ -377,7 +377,7 @@ model_results <- rbind(model_results,
 model_results %>% knitr::kable()
 ```
 
-### 3-9.	rf
+### 3-9.	random forest
 
 Random Forest
 ```{r rf1, echo=TRUE, warning=FALSE}

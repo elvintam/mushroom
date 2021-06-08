@@ -226,6 +226,8 @@ model_results %>% knitr::kable()
 
 ### 3-3.	Naïve Bayes
 
+Naïve Bayes algorithm is based on Bayes theorem and used for solving classification problems. It is a probabilistic classifier, which means it predicts on the basis of the probability of an object.
+
 ```{r nb1, echo=TRUE, warning=FALSE}
 
 fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)

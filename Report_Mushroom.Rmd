@@ -117,8 +117,8 @@ plot_correlation(mushroom, maxcat = 5L)
 
 We will use 10 algorithms and 1 ensemble model to evaluate if this can provide improvement to our predictions. Algorithms are listed below.
 
-3-1.	glm <br>
-3-2.	lda <br>
+3-1.	GLM <br>
+3-2.	LDA <br>
 3-3.	Naïve Bayes <br>
 3-4.	svmLinear <br>
 3-5.	Classification Model <br>
@@ -129,11 +129,11 @@ We will use 10 algorithms and 1 ensemble model to evaluate if this can provide i
 3-10.	adaboost <br>
 3-11.	ensemble <br>
 
-### 3-1. glm
+### 3-1. GLM
 
-Generalized Linear Model (glm) is the most common and simple model. This is the starting point of our modeling. Using Caret package, we can simply apply 10 different algorithms in a standardized way. 
+Generalized Linear Model (GLM) is the most common and general model. This is the starting point of our modeling. Using Caret package, we can simply apply 10 different algorithms in a standardized way. 
 
-In glm model, we get warning message of "Warning: glm.fit: algorithm did not converge", "Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred" and "prediction from a rank-deficient fit may be misleading". 
+When we run the GLM algorithms, we get warning message of "Warning: glm.fit: algorithm did not converge", "Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred" and "prediction from a rank-deficient fit may be misleading". 
 
 ```{r glm1, echo=TRUE, warning=FALSE}
 
@@ -168,7 +168,7 @@ s$aliased[which(s$aliased == TRUE)]
 
 ```
 
-glm results are tabulated below.
+GLM results are tabulated below.
 
 ```{r glm4, echo=FALSE, warning=FALSE}
 y_hat_glm <- predict(fit_glm, test_set)
@@ -196,7 +196,9 @@ rm(test_index)
 
 ```
 
-### 3-2. lda
+### 3-2. LDA
+
+Linear Discriminant Analysis (LDA) is an algorithm for predictive classification modeling problems. LDA makes predictions by estimating the probability that a new set of inputs belongs to each class. The class that gets the highest probability is the output class and a prediction is made.
 
 ```{r lda, echo=TRUE, warning=FALSE}
 

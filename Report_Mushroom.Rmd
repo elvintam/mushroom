@@ -121,13 +121,13 @@ We will use 10 algorithms and 1 ensemble model to evaluate if this can provide i
 3-2.	LDA <br>
 3-3.	Naïve Bayes <br>
 3-4.	svmLinear <br>
-3-5.	Classification Model <br>
-3-6.	knn <br>
-3-7.	gamLoess <br>
-3-8.	multinom <br>
-3-9.	random forest <br>
-3-10.	adaboost <br>
-3-11.	ensemble <br>
+3-5.	KNN <br>
+3-6.	gamLoess <br>
+3-7.	Multinom <br>
+3-8.	Classification Model <br>
+3-9.	Random Forest <br>
+3-10.	Adaboost <br>
+3-11.	Ensemble <br>
 
 ### 3-1. GLM
 
@@ -226,7 +226,7 @@ model_results %>% knitr::kable()
 
 ### 3-3.	Naïve Bayes
 
-Naïve Bayes algorithm is based on Bayes theorem and used for solving classification problems. It is a probabilistic classifier, which means it predicts on the basis of the probability of an object.
+Naïve Bayes algorithm is based on Bayes theorem and used for solving classification problems. It is a probabilistic classifier basing on the probability of an object to make prediction.
 
 ```{r nb1, echo=TRUE, warning=FALSE}
 
@@ -253,7 +253,7 @@ model_results %>% knitr::kable()
 
 ### 3-4.	svmLinear
 
-Support Vector Machine
+svmLinear stands for Support Vector Machine (SVM) Linear Model. It fits a linear SVM model by identifying the optimal decision boundary that separates data points from different classes, and then predicts the class of new observations based on this separation boundary.
 
 ```{r svmLinear1, echo=TRUE, warning=FALSE}
 
@@ -277,39 +277,15 @@ model_results <- rbind(model_results,
 model_results %>% knitr::kable()
 ```
 
-### 3-5.	Classification Model
+### 3-5.	KNN
 
-```{r CM1, echo=TRUE, warning=FALSE}
-
-fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
-fit_rpart["finalModel"]
-
-rpart.plot(fit_rpart$finalModel)
-
-```
-
-```{r CM2, echo=FALSE}
-
-y_hat_rpart <- predict(fit_rpart, test_set)
-
-cm <- confusionMatrix(y_hat_rpart, test_set$class)
-
-model_results <- rbind(model_results,
-                       tibble(Method = "rpart",
-                              Accuracy = cm$overall["Accuracy"],
-                              Kappa = cm$overall["Kappa"],
-                              Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
-
-model_results %>% knitr::kable()
-```
-
-### 3-6.	knn
+The k-nearest neighbors (KNN) algorithm predicts the outcome of a new observation by comparing it to k similar cases in the training data set. The best tune here is k = 5.
 
 ```{r knn1, echo=TRUE, warning=FALSE}
 
 fit_knn <- train(class ~ ., method = "knn", data = train_set)
 fit_knn["finalModel"]
+fit_knn$bestTune
 
 ```
 
@@ -328,15 +304,15 @@ model_results <- rbind(model_results,
 model_results %>% knitr::kable()
 ```
 
-### 3-7.	gamLoess
+### 3-6.	gamLoess
+
+gamLoess stands for Generalized Additive Model using LOESS (Local weighted regression). Comparing to the bin smoother approach with constant assumptions in KNN, Loess considers larger window size (span = 0.5 here) with fitting a line within that window than with a constant. 
 
 ```{r gamLoess1, echo=TRUE, message=FALSE, warning=FALSE}
 
 fit_gamLoess <- train(class ~ ., method = "gamLoess", data = train_set)
 
-s <- summary(fit_gamLoess)
-
-s$parametric.anova
+fit_gamLoess$bestTune
 ```
 
 ```{r gamLoess2, echo=FALSE}
@@ -354,7 +330,9 @@ model_results <- rbind(model_results,
 model_results %>% knitr::kable()
 ```
 
-### 3-8.	multinom
+### 3-7.	multinom
+
+Multinomial Regression is an extension of the logistic regression. It is specially designed for the nominal data. The target dependent variable can have more than two classes. Although we only have two classes, we still apply the algorithm to check the result.
 
 ```{r multinom1, message=FALSE, warning=FALSE, include=FALSE}
 
@@ -381,12 +359,45 @@ model_results <- rbind(model_results,
 model_results %>% knitr::kable()
 ```
 
-### 3-9.	random forest
+### 3-8.	Classification Model
 
-Random Forest
+Classification Model is basing decision tree. It works by repeatedly partitioning data into multiple sub-spaces. The outcome in each final sub-space is as homogeneous as possible. Both text and visualized binary tree are presented here. 
+
+```{r CM1, echo=TRUE, warning=FALSE}
+
+fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
+fit_rpart["finalModel"]
+
+rpart.plot(fit_rpart$finalModel)
+
+```
+
+```{r CM2, echo=FALSE}
+
+y_hat_rpart <- predict(fit_rpart, test_set)
+
+cm <- confusionMatrix(y_hat_rpart, test_set$class)
+
+model_results <- rbind(model_results,
+                       tibble(Method = "rpart",
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"]))
+
+model_results %>% knitr::kable()
+```
+
+### 3-9.	Random Forest
+
+Random Forest algorithm addresses the shortcomings of decision tree with a special type of bagging to the data and bootstrap sampling at each split (bootstrap aggregating). This means that at each splitting step of the tree algorithm, a random sample of n predictors is chosen as split candidates from the full set of the predictors. As suggested in the course, we used "Rborist" method rather than "rf" method because of time efficiency. Variable Importance shows that Odorn = 1 is the most important. This is in-line with the decision tree in Classification Model.
+
 ```{r rf1, echo=TRUE, warning=FALSE}
 fit_rf <- train(class ~ ., method = "Rborist", data = train_set)
-fit_rf["finalModel"]
+
+fit_rf$bestTune
+
+varImp(fit_rf)
 ```
 
 ```{r rf2, echo=FALSE}
@@ -405,12 +416,16 @@ model_results <- rbind(model_results,
 model_results %>% knitr::kable()
 ```
 
-### 3-10.	adaboost
+### 3-10.	Adaboost
+
+Instead of growing tree randomly, Adaptive Boosting algorithm grows trees using information from previously grown trees, with the aim to minimize the error of the previous models.
 
 ```{r adaboost, echo=TRUE, warning=FALSE}
 
 fit_adaboost <- train(class ~ ., method = "adaboost", data = train_set)
 fit_adaboost["finalModel"]
+
+varImp(fit_adaboost)
 
 ```
 

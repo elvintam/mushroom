@@ -136,8 +136,9 @@ Generalized Linear Model (GLM) is the most common and general model. This is the
 When we run the GLM algorithms, we get warning message of "Warning: glm.fit: algorithm did not converge", "Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred" and "prediction from a rank-deficient fit may be misleading". 
 
 ```{r glm1, echo=TRUE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_glm <- train(class ~ ., method = "glm", data = train_set)
+time_diff <- Sys.time() - start_time
 
 s <- summary(fit_glm)
 
@@ -158,7 +159,9 @@ train_set <- train_set %>% select(-stalk_color_above_ring, -stalk_color_below_ri
 test_set <- test_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, 
                                 -veil_color, -ring_number, -ring_type, -spore_print_color)
 
+start_time <- Sys.time()
 fit_glm <- train(class ~ ., method = "glm", data = train_set)
+time_diff <- Sys.time() - start_time
 
 s <- summary(fit_glm)
 
@@ -179,7 +182,8 @@ model_results <- tibble(Method = "glm",
                         Accuracy = cm$overall["Accuracy"],
                         Kappa = cm$overall["Kappa"],
                         Sensitivity = cm$byClass["Sensitivity"],
-                        Specificity = cm$byClass["Specificity"])
+                        Specificity = cm$byClass["Specificity"],
+                        Train_Time = time_diff)
 
 model_results %>% knitr::kable()
 
@@ -201,8 +205,9 @@ rm(test_index)
 Linear Discriminant Analysis (LDA) is an algorithm for predictive classification modeling problems. LDA makes predictions by estimating the probability that a new set of inputs belongs to each class. The class that gets the highest probability is the output class and a prediction is made.
 
 ```{r lda, echo=TRUE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_lda <- train(class ~ ., method = "lda", data = train_set)
+time_diff <- Sys.time() - start_time
 
 s <- summary(fit_lda)
 
@@ -219,7 +224,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -229,8 +235,9 @@ model_results %>% knitr::kable()
 Naïve Bayes algorithm is based on Bayes theorem and used for solving classification problems. It is a probabilistic classifier basing on the probability of an object to make prediction.
 
 ```{r nb1, echo=TRUE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)
+time_diff <- Sys.time() - start_time
 
 summary(fit_nb)
 
@@ -243,10 +250,11 @@ cm <- confusionMatrix(y_hat_nb, test_set$class)
 
 model_results <- rbind(model_results,
                        tibble(Method = "navie bayes",
-                        Accuracy = cm$overall["Accuracy"],
-                        Kappa = cm$overall["Kappa"],
-                        Sensitivity = cm$byClass["Sensitivity"],
-                        Specificity = cm$byClass["Specificity"]))
+                              Accuracy = cm$overall["Accuracy"],
+                              Kappa = cm$overall["Kappa"],
+                              Sensitivity = cm$byClass["Sensitivity"],
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -256,8 +264,10 @@ model_results %>% knitr::kable()
 svmLinear stands for Support Vector Machine (SVM) Linear Model. It fits a linear SVM model by identifying the optimal decision boundary that separates data points from different classes, and then predicts the class of new observations based on this separation boundary.
 
 ```{r svmLinear1, echo=TRUE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_svmLinear <- train(class ~ ., method = "svmLinear", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_svmLinear["finalModel"]
 
 ```
@@ -272,7 +282,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -282,8 +293,10 @@ model_results %>% knitr::kable()
 The k-nearest neighbors (KNN) algorithm predicts the outcome of a new observation by comparing it to k similar cases in the training data set. The best tune here is k = 5.
 
 ```{r knn1, echo=TRUE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_knn <- train(class ~ ., method = "knn", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_knn["finalModel"]
 fit_knn$bestTune
 
@@ -299,7 +312,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -309,8 +323,9 @@ model_results %>% knitr::kable()
 gamLoess stands for Generalized Additive Model using LOESS (Local weighted regression). Comparing to the bin smoother approach with constant assumptions in KNN, Loess considers larger window size (span = 0.5 here) with fitting a line within that window than with a constant. 
 
 ```{r gamLoess1, echo=TRUE, message=FALSE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_gamLoess <- train(class ~ ., method = "gamLoess", data = train_set)
+time_diff <- Sys.time() - start_time
 
 fit_gamLoess$bestTune
 ```
@@ -325,7 +340,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -335,8 +351,9 @@ model_results %>% knitr::kable()
 Multinomial Regression is an extension of the logistic regression. It is specially designed for the nominal data. The target dependent variable can have more than two classes. Although we only have two classes, we still apply the algorithm to check the result.
 
 ```{r multinom1, message=FALSE, warning=FALSE, include=FALSE}
-
+start_time <- Sys.time()
 fit_multinom <- train(class ~ ., method = "multinom", data = train_set)
+time_diff <- Sys.time() - start_time
 ```
 
 ```{r multinom2, echo=TRUE, warning=FALSE}
@@ -354,7 +371,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -364,8 +382,10 @@ model_results %>% knitr::kable()
 Classification Model is basing decision tree. It works by repeatedly partitioning data into multiple sub-spaces. The outcome in each final sub-space is as homogeneous as possible. Both text and visualized binary tree are presented here. 
 
 ```{r CM1, echo=TRUE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_rpart["finalModel"]
 
 rpart.plot(fit_rpart$finalModel)
@@ -383,7 +403,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -393,7 +414,9 @@ model_results %>% knitr::kable()
 Random Forest algorithm addresses the shortcomings of decision tree with a special type of bagging to the data and bootstrap sampling at each split (bootstrap aggregating). This means that at each splitting step of the tree algorithm, a random sample of n predictors is chosen as split candidates from the full set of the predictors. As suggested in the course, we used "Rborist" method rather than "rf" method because of time efficiency. Variable Importance shows that Odorn = 1 is the most important. This is in-line with the decision tree in Classification Model.
 
 ```{r rf1, echo=TRUE, warning=FALSE}
+start_time <- Sys.time()
 fit_rf <- train(class ~ ., method = "Rborist", data = train_set)
+time_diff <- Sys.time() - start_time
 
 fit_rf$bestTune
 
@@ -411,7 +434,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
@@ -421,8 +445,10 @@ model_results %>% knitr::kable()
 Instead of growing tree randomly, Adaptive Boosting algorithm grows trees using information from previously grown trees, with the aim to minimize the error of the previous models.
 
 ```{r adaboost, echo=TRUE, warning=FALSE}
-
+start_time <- Sys.time()
 fit_adaboost <- train(class ~ ., method = "adaboost", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_adaboost["finalModel"]
 
 varImp(fit_adaboost)
@@ -439,19 +465,21 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 ```
 
 ### 3-11.	ensemble
 
-```{r ensemble1, echo=TRUE, warning=FALSE}
-
+```{r ensemble1, echo=TRUE, message=FALSE, warning=FALSE}
+start_time <- Sys.time()
 y_hat_results <- bind_cols(y_hat_glm, y_hat_lda, y_hat_nb, 
                            y_hat_svmLinear, y_hat_rpart,
                            y_hat_knn, y_hat_gamLoess, y_hat_multinom, 
                            y_hat_rf, y_hat_adaboost)
+time_diff <- Sys.time() - start_time
 
 y_hat_ensemble <- ifelse(rowMeans(y_hat_results == "e") >0.5, "e", "p")
 
@@ -465,7 +493,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 

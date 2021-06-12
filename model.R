@@ -11,7 +11,7 @@ str(train_set)
 help("warnings")
 
 ###########
-### glm
+### data split
 ###########
 
 
@@ -28,7 +28,9 @@ rm(test_index)
 ### glm
 ###########
 
+start_time <- Sys.time()
 fit_glm <- train(class ~ ., method = "glm", data = train_set)
+time_diff <- Sys.time() - start_time
 
 warnings()
 
@@ -43,7 +45,9 @@ train_set <- train_set %>% select(-stalk_color_above_ring, -stalk_color_below_ri
 test_set <- test_set %>% select(-stalk_color_above_ring, -stalk_color_below_ring, 
                                 -veil_color, -ring_number, -ring_type, -spore_print_color)
 
+start_time <- Sys.time()
 fit_glm <- train(class ~ ., method = "glm", data = train_set)# maxit = 200)
+time_diff <- Sys.time() - start_time
 
 warnings()
 
@@ -61,7 +65,8 @@ model_results <- tibble(Method = "glm",
                         Accuracy = cm$overall["Accuracy"],
                         Kappa = cm$overall["Kappa"],
                         Sensitivity = cm$byClass["Sensitivity"],
-                        Specificity = cm$byClass["Specificity"])
+                        Specificity = cm$byClass["Specificity"],
+                        Train_Time = time_diff)
 
 model_results %>% knitr::kable()
                             
@@ -71,7 +76,9 @@ model_results %>% knitr::kable()
 ### lda
 ###########
 
+start_time <- Sys.time()
 fit_lda <- train(class ~ ., method = "lda", data = train_set)
+time_diff <- Sys.time() - start_time
 
 s <- summary(fit_lda)
 
@@ -86,8 +93,9 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
-
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
+                       
 model_results %>% knitr::kable()
 
 
@@ -95,7 +103,9 @@ model_results %>% knitr::kable()
 ### naive_bayes
 ###########
 
+start_time <- Sys.time()
 fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)
+time_diff <- Sys.time() - start_time
 
 s <- summary(fit_nb)
 
@@ -110,7 +120,8 @@ model_results <- rbind(model_results,
                         Accuracy = cm$overall["Accuracy"],
                         Kappa = cm$overall["Kappa"],
                         Sensitivity = cm$byClass["Sensitivity"],
-                        Specificity = cm$byClass["Specificity"]))
+                        Specificity = cm$byClass["Specificity"],
+                        Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -118,7 +129,10 @@ model_results %>% knitr::kable()
 ### svmLinear
 ###########
 
+start_time <- Sys.time()
 fit_svmLinear <- train(class ~ ., method = "svmLinear", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_svmLinear["finalModel"]
 
 s <- summary(fit_svmLinear)
@@ -134,7 +148,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -143,7 +158,10 @@ model_results %>% knitr::kable()
 #### Classification Model
 ###########
 
+start_time <- Sys.time()
 fit_rpart <- train(class ~ ., method = "rpart", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_rpart["finalModel"]
 
 rpart.plot(fit_rpart$finalModel)
@@ -159,7 +177,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -167,7 +186,10 @@ model_results %>% knitr::kable()
 #### knn
 ###########
 
+start_time <- Sys.time()
 fit_knn <- train(class ~ ., method = "knn", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_knn["finalModel"]
 
 s <- summary(fit_knn)
@@ -181,7 +203,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -190,7 +213,10 @@ model_results %>% knitr::kable()
 #### gamLoess
 ###########
 
+start_time <- Sys.time()
 fit_gamLoess <- train(class ~ ., method = "gamLoess", data = train_set)
+time_diff <- Sys.time() - start_time
+
 #fit_gamLoess["finalModel"]
 
 s <- summary(fit_gamLoess)
@@ -206,7 +232,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -214,7 +241,10 @@ model_results %>% knitr::kable()
 #### multinom
 ###########
 
+start_time <- Sys.time()
 fit_multinom <- train(class ~ ., method = "multinom", data = train_set)
+time_diff <- Sys.time() - start_time
+
 help(train)
 fit_multinom["finalModel"]
 
@@ -229,7 +259,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -237,7 +268,10 @@ model_results %>% knitr::kable()
 #### rf
 ###########
 
+start_time <- Sys.time()
 fit_rf <- train(class ~ ., method = "Rborist", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_rf["finalModel"]
 
 s <- summary(fit_rf)
@@ -251,7 +285,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -259,7 +294,10 @@ model_results %>% knitr::kable()
 #### adaboost
 ###########
 
+start_time <- Sys.time()
 fit_adaboost <- train(class ~ ., method = "adaboost", data = train_set)
+time_diff <- Sys.time() - start_time
+
 fit_adaboost["finalModel"]
 
 s <- summary(fit_adaboost)
@@ -273,7 +311,8 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()
 
@@ -282,10 +321,12 @@ model_results %>% knitr::kable()
 #### ensemble
 ###########
 
+start_time <- Sys.time()
 y_hat_results <- bind_cols(y_hat_glm, y_hat_lda, y_hat_nb, 
                            y_hat_svmLinear, y_hat_rpart,
                            y_hat_knn, y_hat_gamLoess, y_hat_multinom, 
                            y_hat_rf, y_hat_adaboost)
+time_diff <- Sys.time() - start_time
 
 y_hat_ensemble <- ifelse(rowMeans(y_hat_results == "e") >0.5, "e", "p")
 
@@ -296,6 +337,7 @@ model_results <- rbind(model_results,
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
-                              Specificity = cm$byClass["Specificity"]))
+                              Specificity = cm$byClass["Specificity"],
+                              Train_Time = time_diff))
 
 model_results %>% knitr::kable()

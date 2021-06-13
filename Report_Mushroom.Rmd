@@ -236,7 +236,7 @@ Naïve Bayes algorithm is based on Bayes theorem and used for solving classifica
 
 ```{r nb1, echo=TRUE, warning=FALSE}
 start_time <- Sys.time()
-fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)
+fit_nb <- train(class ~ ., method = "naïve_bayes", data = train_set)
 time_diff <- Sys.time() - start_time
 
 summary(fit_nb)
@@ -399,7 +399,7 @@ y_hat_rpart <- predict(fit_rpart, test_set)
 cm <- confusionMatrix(y_hat_rpart, test_set$class)
 
 model_results <- rbind(model_results,
-                       tibble(Method = "rpart",
+                       tibble(Method = "classif. model",
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
@@ -430,7 +430,7 @@ y_hat_rf <- predict(fit_rf, test_set)
 cm <- confusionMatrix(y_hat_rf, test_set$class)
 
 model_results <- rbind(model_results,
-                       tibble(Method = "rf",
+                       tibble(Method = "random forest",
                               Accuracy = cm$overall["Accuracy"],
                               Kappa = cm$overall["Kappa"],
                               Sensitivity = cm$byClass["Sensitivity"],
@@ -473,6 +473,8 @@ model_results %>% knitr::kable()
 
 ### 3-11.	ensemble
 
+Ensemble model combines the results from previous 10 algorithms. If more than 50% algorithms predict edible, it will predict edible. 
+
 ```{r ensemble1, echo=TRUE, message=FALSE, warning=FALSE}
 start_time <- Sys.time()
 y_hat_results <- bind_cols(y_hat_glm, y_hat_lda, y_hat_nb, 
@@ -500,11 +502,11 @@ model_results %>% knitr::kable()
 
 ```
 
-
-So among all classification model Random Forest Classification has highest accuracy score = 99.75%.
-
 # Result
-a results section that presents the modeling results and discusses the model performance
+
+From the above table, the lowest accuracy is coming from Naïve Bayes followed by Classification Model and LDA. Other algorithms are all 100% accurate. The Kappa of these 3 algorithms are lower than 1 (from 0.88 to 0.99), which means that it is slightly affected by randomness. For Sensitivity, only Naïve Bayes is lower than 1. For Specificity, these 3 algorithms are lower than 100% but they are in high tier of 9x%.
+
+In terms of performance (basing on my PC, 6 cores, 3.4GHz, 32G Ram), it takes more than 200 secs to finish the training process by Random Forest and more than 100 secs by Adaboost. The more trees created in the forest the lowest performance it is. KNN takes about 90 secs to finish because it best-tunes the results in CARET package. Ensemble model consumes less than 0.01 sec by only used the in RAM results from other algorithms with only one IF code. 
 
 # Conclusion
 a conclusion section that gives a brief summary of the report, its limitations and future work

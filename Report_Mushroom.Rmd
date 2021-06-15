@@ -3,8 +3,8 @@ title: 'Data Science: Capstone CYO Project - Mushroom'
 author: "Elvin Tam"
 date: "15 June 2021"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -236,7 +236,7 @@ Naïve Bayes algorithm is based on Bayes theorem and used for solving classifica
 
 ```{r nb1, echo=TRUE, warning=FALSE}
 start_time <- Sys.time()
-fit_nb <- train(class ~ ., method = "naïve_bayes", data = train_set)
+fit_nb <- train(class ~ ., method = "naive_bayes", data = train_set)
 time_diff <- Sys.time() - start_time
 
 summary(fit_nb)
@@ -510,4 +510,4 @@ In terms of performance (basing on my PC, 6 cores, 3.4GHz, 32G Ram), it takes mo
 
 # Conclusion
 
-In this report, we run through 10 basic machine learning algorithms with the mushroom data set. The accuracy of the prediction is at least 94% and 7 out of 10 algorithms are 100% accurate. In conclusion, algorithms basing on bootstrap aggregating decision tree (Random Forecast / Adaboost) and neighbors (KNN / Loess) consume longer training time than linear regression or probability based models. PCA (Principal Components Analysis) can be a next step for future study.
+In this report, we run through 10 basic machine learning algorithms with the mushroom data set. The accuracy of the prediction is at least 94% and 7 out of 10 algorithms are 100% accurate. In terms of performance, algorithms basing on bootstrap aggregating decision tree (Random Forecast / Adaboost) and neighbors (KNN / Loess) consume longer training time than linear regression and probability based models. PCA (Principal Components Analysis) can be a next step for future study.

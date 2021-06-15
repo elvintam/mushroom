@@ -1,7 +1,7 @@
 ---
 title: 'Data Science: Capstone CYO Project - Mushroom'
 author: "Elvin Tam"
-date: "10 June 2021"
+date: "15 June 2021"
 output:
   html_document: default
   pdf_document: default
@@ -504,9 +504,10 @@ model_results %>% knitr::kable()
 
 # Result
 
-From the above table, the lowest accuracy is coming from Naïve Bayes followed by Classification Model and LDA. Other algorithms are all 100% accurate. The Kappa of these 3 algorithms are lower than 1 (from 0.88 to 0.99), which means that it is slightly affected by randomness. For Sensitivity, only Naïve Bayes is lower than 1. For Specificity, these 3 algorithms are lower than 100% but they are in high tier of 9x%.
+From the above table, the lowest accuracy is coming from Naïve Bayes followed by Classification Model and LDA. Other algorithms are all 100% accurate. The Kappa of these 3 algorithms are lower than 1 (from 0.88 to 0.99), which means that it is slightly affected by randomness. For Sensitivity, only Naïve Bayes is lower than 1. For Specificity, these 3 algorithms are lower than 100% but they are in high tier of 9x%. For ensemble model, we can not find improvement because 7 out of 10 algorithms obtain the 100% accuracy in test set already. 
 
-In terms of performance (basing on my PC, 6 cores, 3.4GHz, 32G Ram), it takes more than 200 secs to finish the training process by Random Forest and more than 100 secs by Adaboost. The more trees created in the forest the lowest performance it is. KNN takes about 90 secs to finish because it best-tunes the results in CARET package. Ensemble model consumes less than 0.01 sec by only used the in RAM results from other algorithms with only one IF code. 
+In terms of performance (basing on my PC, 6 cores, 3.4GHz, 32G Ram), it takes more than 200 secs to finish the training process by Random Forest and more than 100 secs by Adaboost. The more trees created in the forest the lowest performance it is. KNN takes about 90 secs to finish because it best-tunes the results in CARET package. Ensemble model consumes less than 0.01 sec by only using the in RAM results from other algorithms with one line of IF code. 
 
 # Conclusion
-a conclusion section that gives a brief summary of the report, its limitations and future work
+
+In this report, we run through 10 basic machine learning algorithms with the mushroom data set. The accuracy of the prediction is at least 94% and 7 out of 10 algorithms are 100% accurate. In conclusion, algorithms basing on bootstrap aggregating decision tree (Random Forecast / Adaboost) and neighbors (KNN / Loess) consume longer training time than linear regression or probability based models. PCA (Principal Components Analysis) can be a next step for future study.
